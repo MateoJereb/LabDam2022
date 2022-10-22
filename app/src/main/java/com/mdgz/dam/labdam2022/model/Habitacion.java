@@ -64,4 +64,8 @@ public class Habitacion  extends Alojamiento {
         return hotel.getUbicacion();
     }
 
+    @Override
+    public String toString() {
+        return "Hotel";
+    }
 }

@@ -9,20 +9,37 @@
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/materialToolbar"
-        android:layout_width="409dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="2dp" />
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView"
-        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ToolbarTheme"
+        android:popupTheme="?attr/popupTheme"
+        android:background="?attr/colorPrimary"
+        android:elevation="4sp"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="2dp"
+        app:title="utnbnb"
+        app:titleTextColor="@color/white"
+        app:titleTextAppearance="@style/AppName"
+        app:menu="@menu/tool_bar_menu" />
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/navegacion" />
+        android:fillViewport="true"
+        android:layout_marginStart="15sp"
+        android:layout_marginEnd="15sp">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragmentContainerView"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/navegacion" />
+
+    </ScrollView>
+
 
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -51,4 +51,9 @@ public class Departamento extends Alojamiento{
     public Ubicacion getUbicacion() {
         return null;
     }
+
+    @Override
+    public String toString() {
+        return "Departamento";
+    }
 }

@@ -2,11 +2,20 @@ package com.mdgz.dam.labdam2022;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+
+import com.mdgz.dam.labdam2022.databinding.FragmentBusquedaBinding;
+import com.mdgz.dam.labdam2022.model.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +32,8 @@ public class BusquedaFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private FragmentBusquedaBinding binding;
 
     public BusquedaFragment() {
         // Required empty public constructor
@@ -56,9 +67,33 @@ public class BusquedaFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_busqueda, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentBusquedaBinding.inflate(inflater,container,false);
+
+        List<Alojamiento> listaTipos = new ArrayList<>();
+        listaTipos.add(null);
+        listaTipos.add(new Departamento());
+        listaTipos.add(new Habitacion());
+
+        ArrayAdapter<Alojamiento> adapterTipos = new ArrayAdapter<Alojamiento>(this.getActivity(),android.R.layout.simple_spinner_dropdown_item,listaTipos);
+        binding.tipoSpinner.setAdapter(adapterTipos);
+
+        binding.restablecerButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                onRestablecer();
+            }
+        });
+
+        return binding.getRoot();
+    }
+
+    private void onRestablecer() {
+        binding.tipoSpinner.setSelection(0);
+        binding.capacidadEditText.setText(null);
+        binding.minPrecioEditText.setText(null);
+        binding.maxPrecioEditText.setText(null);
+        binding.ciudadSpinner.setSelection(0);
+        binding.wifiCheckBox.setChecked(false);
     }
 }
