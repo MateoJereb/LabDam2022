@@ -3,10 +3,15 @@ package com.mdgz.dam.labdam2022;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.mdgz.dam.labdam2022.databinding.FragmentResultadoBusquedaBinding;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +28,10 @@ public class ResultadoBusquedaFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private FragmentResultadoBusquedaBinding binding;
+    private NavController navController;
+
 
     public ResultadoBusquedaFragment() {
         // Required empty public constructor
@@ -56,9 +65,14 @@ public class ResultadoBusquedaFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_resultado_busqueda, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentResultadoBusquedaBinding.inflate(inflater, container, false);
+        navController = NavHostFragment.findNavController(this);
+
+        View view = binding.getRoot();
+
+
+
+        return view;
     }
 }

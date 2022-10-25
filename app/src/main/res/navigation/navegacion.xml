@@ -14,6 +14,7 @@
             android:id="@+id/action_busquedaFragment_to_resultadoBusquedaFragment"
             app:destination="@id/resultadoBusquedaFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/resultadoBusquedaFragment"
         android:name="com.mdgz.dam.labdam2022.ResultadoBusquedaFragment"
@@ -26,6 +27,7 @@
             android:id="@+id/action_resultadoBusquedaFragment_to_busquedaFragment"
             app:destination="@id/busquedaFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/detalleAlojamientoFragment"
         android:name="com.mdgz.dam.labdam2022.DetalleAlojamientoFragment"
@@ -38,4 +40,5 @@
             android:id="@+id/action_detalleAlojamientoFragment_to_resultadoBusquedaFragment"
             app:destination="@id/resultadoBusquedaFragment" />
     </fragment>
+
 </navigation>
