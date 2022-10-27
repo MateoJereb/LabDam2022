@@ -19,4 +19,5 @@
     <string name="action_reservas">Reservas</string>
     <string name="action_favoritos">Favoritos</string>
     <string name="action_config">Configuración</string>
+    <string name="resultado_title">Resultados de la búsqueda</string>
 </resources>

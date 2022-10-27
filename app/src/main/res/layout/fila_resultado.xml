@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="110sp"
+    android:animateLayoutChanges="true"
+    app:cardUseCompatPadding="true"
+    app:cardCornerRadius="15sp"
+    android:elevation="4sp">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1000"
+            android:layout_marginTop="5sp"
+            android:layout_marginStart="5sp"
+            android:layout_marginEnd="5sp"
+            android:layout_marginBottom="5sp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tituloTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Titulo alojamiento"
+                android:layout_marginStart="15sp"
+                android:theme="@style/RowTitle"/>
+
+            <TextView
+                android:id="@+id/descripcionTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Descripción del alojamiento"
+                android:layout_marginStart="15sp"
+                android:theme="@style/RowDescription"/>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_gravity="end">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical">
+
+                    <CheckBox
+                        android:id="@+id/favoritoCheckBox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:button="@drawable/favourite_checkbox"
+                        android:theme="@style/FavouriteCheckbox" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Precio base: "
+                    android:layout_gravity="end|center_vertical"
+                    android:theme="@style/RowPriceDescription"/>
+
+                <TextView
+                    android:id="@+id/precioTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$0.00"
+                    android:layout_gravity="end|center_vertical"
+                    android:theme="@style/RowPrice"/>
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_gravity="end"
+            android:layout_marginStart="5sp">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="100sp"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:src="@drawable/no_image_available"
+                android:scaleType="centerCrop"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.cardview.widget.CardView>
