@@ -16,13 +16,14 @@ import com.mdgz.dam.labdam2022.model.Alojamiento;
 
 import java.util.List;
 
-public class AlojamientosRecyclerAdapter extends RecyclerView.Adapter<AlojamientosRecyclerAdapter.AlojamientosViewHolder> {
+public class AlojamientosAdapter extends RecyclerView.Adapter<AlojamientosAdapter.AlojamientosViewHolder>{
 
     private List<Alojamiento> listaAlojamientos;
     private LayoutInflater inflater;
     private Context context;
+    private AlojamientosAdapter.OnItemClickListener listener;
 
-    public AlojamientosRecyclerAdapter(List<Alojamiento> lista,Context context){
+    public AlojamientosAdapter(List<Alojamiento> lista,Context context){
         listaAlojamientos = lista;
         this.context = context;
         inflater = LayoutInflater.from(context);
@@ -32,21 +33,29 @@ public class AlojamientosRecyclerAdapter extends RecyclerView.Adapter<Alojamient
         this.listaAlojamientos = listaAlojamientos;
     }
 
+    public void setOnItemClickListener(AlojamientosAdapter.OnItemClickListener listener){
+        this.listener = listener;
+    }
+
     @NonNull
     @Override
-    public AlojamientosRecyclerAdapter.AlojamientosViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AlojamientosAdapter.AlojamientosViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.fila_resultado,parent,false);
-        return new AlojamientosViewHolder(view);
+        return new AlojamientosAdapter.AlojamientosViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AlojamientosRecyclerAdapter.AlojamientosViewHolder holder, int position) {
-        holder.bindData(listaAlojamientos.get(position));
+    public void onBindViewHolder(@NonNull AlojamientosAdapter.AlojamientosViewHolder holder, int position) {
+        holder.bindData(listaAlojamientos.get(position),listener);
     }
 
     @Override
     public int getItemCount() {
         return listaAlojamientos.size();
+    }
+
+    public interface OnItemClickListener{
+        void onItemClick(Alojamiento item);
     }
 
     public static class AlojamientosViewHolder extends RecyclerView.ViewHolder{
@@ -65,13 +74,19 @@ public class AlojamientosRecyclerAdapter extends RecyclerView.Adapter<Alojamient
             imagen = itemView.findViewById(R.id.imageView);
         }
 
-        void bindData(Alojamiento alojamiento){
+        void bindData(Alojamiento alojamiento,AlojamientosAdapter.OnItemClickListener listener){
             titulo.setText(alojamiento.getTitulo());
             descripcion.setText(alojamiento.getDescripcion());
             favorito.setChecked(alojamiento.getFavorito());
 
             String precioBase = "$"+String.format("%.2f",alojamiento.getPrecioBase());
             precio.setText(precioBase);
+            itemView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    listener.onItemClick(alojamiento);
+                }
+            });
         }
     }
 }

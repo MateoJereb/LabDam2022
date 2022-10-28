@@ -16,10 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.mdgz.dam.labdam2022.databinding.FragmentResultadoBusquedaBinding;
 import com.mdgz.dam.labdam2022.model.Alojamiento;
-import com.mdgz.dam.labdam2022.recycler_views.AlojamientosRecyclerAdapter;
+import com.mdgz.dam.labdam2022.recycler_views.AlojamientosAdapter;
 import com.mdgz.dam.labdam2022.repo.AlojamientoRepository;
 import com.mdgz.dam.labdam2022.viewmodels.BusquedaViewModel;
 
@@ -48,7 +49,7 @@ public class ResultadoBusquedaFragment extends Fragment {
     private BusquedaViewModel viewModel;
 
     private RecyclerView recyclerView;
-    private AlojamientosRecyclerAdapter recyclerAdapter;
+    private AlojamientosAdapter recyclerAdapter;
 
 
     public ResultadoBusquedaFragment() {
@@ -102,7 +103,7 @@ public class ResultadoBusquedaFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         recyclerView = binding.resultadosRecyclewView;
-        recyclerAdapter = new AlojamientosRecyclerAdapter(new ArrayList<Alojamiento>(),requireActivity());
+        recyclerAdapter = new AlojamientosAdapter(new ArrayList<Alojamiento>(), requireActivity());
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
@@ -111,8 +112,19 @@ public class ResultadoBusquedaFragment extends Fragment {
         recyclerAdapter.setListaAlojamientos(listaAloj);
         recyclerView.setAdapter(recyclerAdapter);
 
+        recyclerAdapter.setOnItemClickListener(new AlojamientosAdapter.OnItemClickListener(){
+            @Override
+            public void onItemClick(Alojamiento item) {
+                onSeleccion(item);
+            }
+        });
+
         /*viewModel.getAlojamientos().observe(getViewLifecycleOwner(), alojamientos -> {
             recyclerAdapter.setListaAlojamientos(alojamientos);
         });*/
+    }
+
+    private void onSeleccion(Alojamiento aloj){
+        navController.navigate(R.id.action_resultadoBusquedaFragment_to_detalleAlojamientoFragment);
     }
 }

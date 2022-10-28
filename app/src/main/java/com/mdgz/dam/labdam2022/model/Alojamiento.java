@@ -1,6 +1,8 @@
 package com.mdgz.dam.labdam2022.model;
 
-public abstract class Alojamiento {
+import java.io.Serializable;
+
+public abstract class Alojamiento implements Serializable{
 
     protected Integer id;
     protected String titulo;

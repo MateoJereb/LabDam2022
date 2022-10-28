@@ -29,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Titulo alojamiento"
-                android:layout_marginStart="15sp"
+                android:layout_marginStart="10sp"
                 android:theme="@style/RowTitle"/>
 
             <TextView
@@ -37,7 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Descripción del alojamiento"
-                android:layout_marginStart="15sp"
+                android:layout_marginStart="10sp"
                 android:theme="@style/RowDescription"/>
 
             <androidx.appcompat.widget.LinearLayoutCompat

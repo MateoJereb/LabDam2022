@@ -66,25 +66,25 @@
 
     <style name="RowTitle" parent="Theme.LabDam2022">
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">17sp</item>
+        <item name="android:textSize">15sp</item>
         <item name="android:textColor">?attr/colorPrimary</item>
         <item name="android:lines">1</item>
     </style>
 
     <style name="RowDescription" parent="Theme.LabDam2022">
-        <item name="android:textSize">13sp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/light_grey</item>
         <item name="android:lines">2</item>
     </style>
 
     <style name="RowPrice" parent="Theme.LabDam2022">
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">13sp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/red_400</item>
     </style>
 
     <style name="RowPriceDescription" parent="Theme.LabDam2022">
-        <item name="android:textSize">13sp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/light_grey</item>
     </style>
 
