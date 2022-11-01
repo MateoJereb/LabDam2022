@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/border">
+
+    <TextView
+        android:id="@+id/capacidadTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10sp"
+        android:text="Capacidad: 0"
+        android:theme="@style/DefaultTextView"/>
+
+    <TextView
+        android:id="@+id/wifiEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Incluye WiFi: Sí"
+        android:theme="@style/DefaultTextView"
+        android:layout_marginBottom="10sp"/>
+
+    <TextView
+        android:id="@+id/limpiezaEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Costo limpieza: $0.00"
+        android:theme="@style/DefaultTextView"
+        android:layout_marginBottom="10sp"/>
+
+    <TextView
+        android:id="@+id/habitacionesEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cantidad de habitaciones: 0"
+        android:theme="@style/DefaultTextView" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

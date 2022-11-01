@@ -20,4 +20,9 @@
     <string name="action_favoritos">Favoritos</string>
     <string name="action_config">Configuración</string>
     <string name="resultado_title">Resultados de la búsqueda</string>
+    <string name="seleccionar">Seleccionar</string>
+    <string name="desde">Desde</string>
+    <string name="hasta">Hasta</string>
+    <string name="cantidad">Cantidad</string>
+    <string name="reservar">Reservar</string>
 </resources>

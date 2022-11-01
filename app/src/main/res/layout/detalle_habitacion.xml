@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/border">
+
+    <TextView
+        android:id="@+id/HotelTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10sp"
+        android:text="Hotel: Nombre Hotel"
+        android:theme="@style/DefaultTextView"/>
+
+    <TextView
+        android:id="@+id/capacidadTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10sp"
+        android:text="Capacidad: 0"
+        android:theme="@style/DefaultTextView"/>
+
+    <TextView
+        android:id="@+id/individualesTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10sp"
+        android:text="Camas individuales: 0"
+        android:theme="@style/DefaultTextView"/>
+
+    <TextView
+        android:id="@+id/matrimonialesTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10sp"
+        android:text="Camas matrimoniales: 0"
+        android:theme="@style/DefaultTextView"/>
+
+    <TextView
+        android:id="@+id/estacionamientoTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tiene estacionamiento: Sí"
+        android:theme="@style/DefaultTextView"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

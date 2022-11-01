@@ -12,6 +12,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <!-- Customize your theme here. -->
+        <item name="colorTertiary">@color/grey</item>
     </style>
 
     <style name="AppName" parent="@style/Theme.LabDam2022">
@@ -64,6 +65,11 @@
         <item name="colorOnPrimary">@color/red_600</item>
     </style>
 
+    <style name="InverseButton" parent="Widget.Material3.Button.TextButton">
+        <item name="colorPrimary">@color/red_400</item>
+        <item name="colorOnPrimary">@android:color/background_dark</item>
+    </style>
+
     <style name="RowTitle" parent="Theme.LabDam2022">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">15sp</item>
@@ -90,5 +96,15 @@
 
     <style name="FavouriteCheckbox" parent="Theme.LabDam2022">
         <item name="colorSecondary">@color/red_400</item>
+    </style>
+
+    <style name="PriceTextView" parent="Theme.LabDam2022">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/small</item>
+        <item name="android:textColor">@color/red_400</item>
+    </style>
+
+    <style name="IconOnText" parent="Theme.LabDam2022">
+        <item name="android:tint">@color/light_grey</item>
     </style>
 </resources>
