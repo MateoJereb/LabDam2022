@@ -25,4 +25,5 @@
     <string name="hasta">Hasta</string>
     <string name="cantidad">Cantidad</string>
     <string name="reservar">Reservar</string>
+    <string name="costo_estadia">Costo estadía:</string>
 </resources>

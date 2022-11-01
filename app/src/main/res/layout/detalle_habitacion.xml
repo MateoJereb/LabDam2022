@@ -6,14 +6,6 @@
     android:background="@drawable/border">
 
     <TextView
-        android:id="@+id/HotelTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10sp"
-        android:text="Hotel: Nombre Hotel"
-        android:theme="@style/DefaultTextView"/>
-
-    <TextView
         android:id="@+id/capacidadTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
