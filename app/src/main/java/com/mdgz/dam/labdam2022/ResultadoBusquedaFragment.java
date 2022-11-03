@@ -125,9 +125,7 @@ public class ResultadoBusquedaFragment extends Fragment {
 
         binding.nuevaBusquedaButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                onNuevaBusqueda();
-            }
+            public void onClick(View view) {onNuevaBusqueda();}
         });
     }
 
