@@ -1,6 +1,30 @@
 <resources>
-    <string name="app_name">LabDam2022</string>
+    <string name="app_name">Utnbnb</string>
     <string name="resultado_busqueda">Resultado busqueda fragment</string>
     <string name="form_busqueda">FORMULARIO busqueda fragment</string>
     <string name="detalle_alojamiento">DETALLE alojamiento fragment</string>
+    <string name="busqueda_title">Búsqueda de alojamientos</string>
+    <string name="busqueda_subtitle">Busque opciones de alojamiento según los requisitos deseados.</string>
+    <string name="tipo_de_alojamiento">Tipo de alojamiento</string>
+    <string name="capacidad">Capacidad</string>
+    <string name="rango_de_precio">Rango de precio</string>
+    <string name="minimo">Mínimo</string>
+    <string name="maximo">Máximo</string>
+    <string name="incluye_wifi">Incluye WiFi</string>
+    <string name="ciudad">Ciudad</string>
+    <string name="restablecer">Restablecer</string>
+    <string name="buscar">Buscar</string>
+    <string name="hintCantidad">Cant. personas</string>
+    <string name="action_buscar">Buscar</string>
+    <string name="action_reservas">Reservas</string>
+    <string name="action_favoritos">Favoritos</string>
+    <string name="action_config">Configuración</string>
+    <string name="resultado_title">Resultados de la búsqueda</string>
+    <string name="seleccionar">Seleccionar</string>
+    <string name="desde">Desde</string>
+    <string name="hasta">Hasta</string>
+    <string name="cantidad">Cantidad</string>
+    <string name="reservar">Reservar</string>
+    <string name="costo_estadia">Costo estadía:</string>
+    <string name="nueva_busqueda">Nueva búsqueda</string>
 </resources>

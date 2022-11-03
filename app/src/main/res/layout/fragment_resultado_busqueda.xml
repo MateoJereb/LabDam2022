@@ -3,12 +3,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ResultadoBusquedaFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/resultado_busqueda" />
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_marginTop="20sp"
+        android:layout_marginStart="15sp"
+        android:layout_marginEnd="15sp">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/resultado_title"
+            android:theme="@style/Title"/>
+        
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/resultadosRecyclewView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginBottom="15sp"/>
+
+        <Button
+            android:id="@+id/nuevaBusquedaButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginBottom="25sp"
+            android:text="@string/nueva_busqueda"
+            android:theme="@style/DefaultButton"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </FrameLayout>

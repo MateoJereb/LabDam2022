@@ -15,8 +15,8 @@ public class Departamento extends Alojamiento{
         super();
     }
 
-    public Departamento(Integer id, String titulo, String descripcion, Integer capacidad, Double precioBase, Boolean tieneWifi, Double costoLimpieza, Integer cantidadHabitaciones,Ubicacion ubicacion) {
-        super(id, titulo, descripcion, capacidad, precioBase);
+    public Departamento(Integer id, String titulo, String descripcion, Integer capacidad, Double precioBase, Boolean favorito, Boolean tieneWifi, Double costoLimpieza, Integer cantidadHabitaciones,Ubicacion ubicacion) {
+        super(id, titulo, descripcion, capacidad, precioBase,favorito);
         this.tieneWifi = tieneWifi;
         this.costoLimpieza = costoLimpieza;
         this.cantidadHabitaciones = cantidadHabitaciones;
@@ -49,6 +49,11 @@ public class Departamento extends Alojamiento{
 
     @Override
     public Ubicacion getUbicacion() {
-        return null;
+        return ubicacion;
+    }
+
+    @Override
+    public String toString() {
+        return "Departamento";
     }
 }
