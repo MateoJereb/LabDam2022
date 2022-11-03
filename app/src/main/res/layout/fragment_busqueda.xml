@@ -5,10 +5,174 @@
     android:layout_height="match_parent"
     tools:context=".BusquedaFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/form_busqueda" />
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:layout_marginTop="20sp"
+            android:layout_marginStart="15sp"
+            android:layout_marginEnd="15sp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/busqueda_title"
+                android:theme="@style/Title" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/busqueda_subtitle"
+                android:theme="@style/Subtitle"
+                android:layout_marginTop="5sp" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="50sp">
+
+                <TextView
+                    android:layout_width="135sp"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/DefaultTextView"
+                    android:text="@string/tipo_de_alojamiento"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="end"
+                    android:layout_marginEnd="7sp" />
+
+                <Spinner
+                    android:id="@+id/tipoSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dropdown"
+                    android:theme="@style/DefaultSpinner"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20sp">
+
+                <TextView
+                    android:layout_width="135sp"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/DefaultTextView"
+                    android:text="@string/capacidad"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="end"
+                    android:layout_marginEnd="7sp"/>
+
+                <EditText
+                    android:id="@+id/capacidadEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10sp"
+                    android:theme="@style/DefaultEditText"
+                    android:inputType="number"
+                    android:hint="@string/hintCantidad"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20sp">
+
+                <TextView
+                    android:layout_width="135sp"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/DefaultTextView"
+                    android:text="@string/rango_de_precio"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="end"
+                    android:layout_marginEnd="7sp"/>
+
+                <EditText
+                    android:id="@+id/minPrecioEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/minimo"
+                    android:theme="@style/DefaultEditText"
+                    android:layout_marginEnd="10sp"
+                    android:inputType="numberDecimal"
+                    android:nextFocusDown="@id/maxPrecioEditText"/>
+
+                <EditText
+                    android:id="@+id/maxPrecioEditText"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/maximo"
+                    android:theme="@style/DefaultEditText"
+                    android:layout_marginEnd="10sp"
+                    android:inputType="numberDecimal" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20sp">
+
+                <TextView
+                    android:layout_width="135sp"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/DefaultTextView"
+                    android:text="@string/ciudad"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="end"
+                    android:layout_marginEnd="7sp"/>
+
+                <Spinner
+                    android:id="@+id/ciudadSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dropdown"
+                    android:theme="@style/DefaultSpinner"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <CheckBox
+                android:id="@+id/wifiCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:theme="@style/DefaultCheckBox"
+                android:layout_marginTop="20sp"
+                android:layout_gravity="center"
+                android:text="@string/incluye_wifi"/>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="50sp"
+                android:layout_gravity="end">
+
+                <Button
+                    android:id="@+id/restablecerButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/restablecer"
+                    android:theme="@style/DefaultButton"/>
+
+                <Button
+                    android:id="@+id/buscarButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/buscar"
+                    android:layout_marginStart="15sp"
+                    android:theme="@style/DefaultButton" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
 </FrameLayout>
