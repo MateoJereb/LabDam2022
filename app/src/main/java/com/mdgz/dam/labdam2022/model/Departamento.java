@@ -49,7 +49,7 @@ public class Departamento extends Alojamiento{
 
     @Override
     public Ubicacion getUbicacion() {
-        return null;
+        return ubicacion;
     }
 
     @Override

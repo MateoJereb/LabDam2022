@@ -122,9 +122,22 @@ public class ResultadoBusquedaFragment extends Fragment {
         /*viewModel.getAlojamientos().observe(getViewLifecycleOwner(), alojamientos -> {
             recyclerAdapter.setListaAlojamientos(alojamientos);
         });*/
+
+        binding.nuevaBusquedaButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onNuevaBusqueda();
+            }
+        });
     }
 
     private void onSeleccion(Alojamiento aloj){
-        navController.navigate(R.id.action_resultadoBusquedaFragment_to_detalleAlojamientoFragment);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("alojamiento",aloj);
+        navController.navigate(R.id.action_resultadoBusquedaFragment_to_detalleAlojamientoFragment,bundle);
+    }
+
+    private void onNuevaBusqueda(){
+        requireActivity().onBackPressed();
     }
 }

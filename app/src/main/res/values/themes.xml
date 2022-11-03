@@ -91,7 +91,7 @@
     <style name="RowPrice" parent="Theme.LabDam2022">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/red_400</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
     </style>
 
     <style name="RowPriceDescription" parent="Theme.LabDam2022">
@@ -100,13 +100,13 @@
     </style>
 
     <style name="FavouriteCheckbox" parent="Theme.LabDam2022">
-        <item name="colorSecondary">@color/red_400</item>
+        <item name="colorSecondary">?attr/colorPrimary</item>
     </style>
 
     <style name="PriceTextView" parent="Theme.LabDam2022">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/small</item>
-        <item name="android:textColor">@color/red_400</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
     </style>
 
     <style name="IconOnText" parent="Theme.LabDam2022">

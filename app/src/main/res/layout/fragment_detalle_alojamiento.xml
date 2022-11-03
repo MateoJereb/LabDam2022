@@ -62,7 +62,7 @@
             android:id="@+id/descripcionTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10sp"
+            android:layout_marginBottom="15sp"
             android:text="Descripción alojamiento"
             android:theme="@style/Subtitle"/>
 
@@ -80,6 +80,7 @@
                 android:theme="@style/IconOnText"/>
 
             <TextView
+                android:id="@+id/ubicacionTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -88,12 +89,13 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <include
+        <ViewStub
             android:id="@+id/tipoAlojamientoLayout"
+            android:inflatedId="@+id/detalleHabitacionLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10sp"
-            layout = "@layout/detalle_habitacion"/>
+            />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -102,8 +104,9 @@
             android:layout_marginBottom="10sp">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="60sp"
                 android:layout_height="wrap_content"
+                android:gravity="end"
                 android:text="@string/desde"
                 android:layout_marginEnd="10sp"
                 android:layout_gravity="center_vertical"
@@ -115,8 +118,11 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:theme="@style/DefaultEditText"
-                android:textColor="?attr/colorTertiary"
-                android:hint="@string/seleccionar"/>
+                android:hint="@string/seleccionar"
+                android:inputType="none"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -128,12 +134,16 @@
                 android:theme="@style/DefaultTextView"/>
 
             <EditText
+                android:id="@+id/hastaDatePicker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:theme="@style/DefaultEditText"
-                android:textColor="?attr/colorTertiary"
-                android:hint="@string/seleccionar"/>
+                android:hint="@string/seleccionar"
+                android:inputType="none"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -144,17 +154,17 @@
             android:layout_marginBottom="10sp">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="60sp"
+                android:gravity="end"
                 android:layout_height="wrap_content"
                 android:text="@string/cantidad"
+                android:layout_marginEnd="10sp"
                 android:theme="@style/DefaultEditText"/>
 
             <EditText
                 android:id="@+id/capacidadEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginEnd="10sp"
                 android:theme="@style/DefaultEditText"
                 android:inputType="number"/>
 

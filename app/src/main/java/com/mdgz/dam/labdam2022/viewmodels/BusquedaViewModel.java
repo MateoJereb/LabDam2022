@@ -50,7 +50,4 @@ public class BusquedaViewModel extends AndroidViewModel {
         return tiposAlojamiento;
     }
 
-    public void buscar(Alojamiento criterios){
-
-    }
 }
