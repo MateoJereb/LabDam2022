@@ -45,4 +45,16 @@
             app:destination="@id/resultadoBusquedaFragment" />
     </fragment>
 
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.mdgz.dam.labdam2022.SettingsFragment"
+        android:label="Configuración"
+        />
+
+    <action
+        android:id="@+id/to_settingsFragment"
+        app:destination="@id/settingsFragment"
+        app:enterAnim="@anim/down_in"
+        app:popExitAnim="@anim/down_out"/>
+
 </navigation>

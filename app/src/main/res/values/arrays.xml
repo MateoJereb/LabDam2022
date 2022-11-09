@@ -1,0 +1,27 @@
+<resources>
+    <string-array name="metodo_pago_entries">
+        <item>Efectivo</item>
+        <item>Tarjeta de crédito</item>
+        <item>Tarjeta de débito</item>
+        <item>Débito por CBU</item>
+    </string-array>
+    
+    <string-array name="metodo_pago_values">
+        <item>efectivo</item>
+        <item>tarjeta_credito</item>
+        <item>tarjeta_debito</item>
+        <item>debito_cbu</item>
+    </string-array>
+
+    <string-array name="moneda_entries">
+        <item>Pesos</item>
+        <item>Dólares</item>
+        <item>Euros</item>
+    </string-array>
+
+    <string-array name="moneda_values">
+        <item>peso</item>
+        <item>dolar</item>
+        <item>euro</item>
+    </string-array>
+</resources>
