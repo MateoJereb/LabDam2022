@@ -48,15 +48,19 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Fragment fragmentoActual = binding.fragmentContainerView.getFragment();
+        NavController navController = NavHostFragment.findNavController(fragmentoActual);
+
         switch ((item.getItemId())){
             case android.R.id.home:
                 onBackPressed();
                 break;
 
-            case R.id.action_config:
-                Fragment fragmentoActual = binding.fragmentContainerView.getFragment();
-                NavController navController = NavHostFragment.findNavController(fragmentoActual);
+            case R.id.action_buscar:
+                while(navController.navigateUp()){ }
+                break;
 
+            case R.id.action_config:
                 if(navController.getCurrentDestination().getId() != R.id.settingsFragment)
                     navController.navigate(R.id.to_settingsFragment);
                 break;

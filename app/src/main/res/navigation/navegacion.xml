@@ -49,12 +49,25 @@
         android:id="@+id/settingsFragment"
         android:name="com.mdgz.dam.labdam2022.SettingsFragment"
         android:label="Configuración"
-        />
+        >
+
+        <action
+            android:id="@+id/action_settingsFragmento_to_logFragment"
+            app:destination="@id/logFragment"/>
+
+    </fragment>
 
     <action
         android:id="@+id/to_settingsFragment"
         app:destination="@id/settingsFragment"
         app:enterAnim="@anim/down_in"
         app:popExitAnim="@anim/down_out"/>
+
+    <fragment
+        android:id="@+id/logFragment"
+        android:name="com.mdgz.dam.labdam2022.LogFragment"
+        android:label="Información de uso"
+        tools:layout="@layout/fragment_log">
+    </fragment>
 
 </navigation>

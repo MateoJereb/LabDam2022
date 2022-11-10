@@ -19,6 +19,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     private NavController navController;
     private ListPreference metodoPagoList;
     private ListPreference monedaList;
+    private Preference logPreference;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,6 +33,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         navController = NavHostFragment.findNavController(this);
+        container.getContext().setTheme(R.style.PreferencesScreen);
 
         return super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -42,6 +44,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
         metodoPagoList = findPreference("metodo_pago");
         monedaList = findPreference("moneda");
+        logPreference = findPreference("log");
 
         String metodoSelected = metodoPagoList.getValue();
         monedaList.setEnabled(metodoPagoList.findIndexOfValue(metodoSelected) == 0);
@@ -52,6 +55,14 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 int pos = metodoPagoList.findIndexOfValue(newValue.toString());
                 monedaList.setEnabled(pos == 0);
 
+                return true;
+            }
+        });
+
+        logPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                navController.navigate(R.id.action_settingsFragmento_to_logFragment);
                 return true;
             }
         });
