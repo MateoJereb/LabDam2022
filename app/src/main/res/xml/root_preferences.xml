@@ -58,7 +58,7 @@
         <Preference
             android:key="log"
             app:title="Ver información de uso"
-            android:dependency="info_uso"></Preference>
+            android:dependency="info_uso"/>
 
     </PreferenceCategory>
 

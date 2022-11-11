@@ -1,5 +1,6 @@
 package com.mdgz.dam.labdam2022;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.preference.PreferenceManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +23,12 @@ import com.mdgz.dam.labdam2022.databinding.FragmentBusquedaBinding;
 import com.mdgz.dam.labdam2022.model.*;
 import com.mdgz.dam.labdam2022.repo.CiudadRepository;
 import com.mdgz.dam.labdam2022.viewmodels.BusquedaViewModel;
+import com.mdgz.dam.labdam2022.viewmodels.LogViewModel;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +36,8 @@ public class BusquedaFragment extends Fragment {
 
     private FragmentBusquedaBinding binding;
     private NavController navController;
-    private BusquedaViewModel viewModel;
+    private BusquedaViewModel busquedaViewModel;
+    private LogViewModel logViewModel;
 
     public BusquedaFragment() {
         // Required empty public constructor
@@ -41,7 +49,8 @@ public class BusquedaFragment extends Fragment {
         if (getArguments() != null) {
         }
 
-        viewModel = new ViewModelProvider(requireActivity()).get(BusquedaViewModel.class);
+        busquedaViewModel = new ViewModelProvider(requireActivity()).get(BusquedaViewModel.class);
+        logViewModel = new ViewModelProvider(requireActivity()).get(LogViewModel.class);
     }
 
     @Override
@@ -59,11 +68,11 @@ public class BusquedaFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        List<Alojamiento> listaTipos = viewModel.getTiposAlojamiento();
+        List<Alojamiento> listaTipos = busquedaViewModel.getTiposAlojamiento();
         ArrayAdapter<Alojamiento> adapterTipos = new ArrayAdapter<Alojamiento>(this.getActivity(),android.R.layout.simple_spinner_dropdown_item,listaTipos);
         binding.tipoSpinner.setAdapter(adapterTipos);
 
-        viewModel.getCiudades().observe(getViewLifecycleOwner(), ciudades -> {
+        busquedaViewModel.getCiudades().observe(getViewLifecycleOwner(), ciudades -> {
             ArrayAdapter<Ciudad> adapterCiudades = new ArrayAdapter<>(this.getActivity(),android.R.layout.simple_spinner_dropdown_item,ciudades);
             binding.ciudadSpinner.setAdapter(adapterCiudades);
         });
@@ -100,6 +109,10 @@ public class BusquedaFragment extends Fragment {
         binding.buscarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireActivity());
+                if(preferences.getBoolean("info_uso",false))
+                    registrarBusqueda();
+
                 navController.navigate(R.id.action_busquedaFragment_to_resultadoBusquedaFragment);
             }
         });
@@ -112,5 +125,24 @@ public class BusquedaFragment extends Fragment {
         binding.maxPrecioEditText.setText(null);
         binding.ciudadSpinner.setSelection(0);
         binding.wifiCheckBox.setChecked(false);
+    }
+
+    private void registrarBusqueda(){
+        String log = "Búsqueda realizada \n" +
+                     LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))+"\n";
+
+        if(binding.tipoSpinner.getSelectedItemId() != 0) log+="Tipo: "+((Alojamiento) binding.tipoSpinner.getSelectedItem()).toString()+"\n";
+        if(binding.capacidadEditText.getText().length() > 0) log+="Capacidad: "+binding.capacidadEditText.getText().toString()+"\n";
+        if(binding.minPrecioEditText.getText().length() > 0) log+="Precio min: "+binding.minPrecioEditText.getText().toString()+"\n";
+        if(binding.maxPrecioEditText.getText().length() > 0) log+="Precio max: "+binding.maxPrecioEditText.getText().toString()+"\n";
+        if(binding.ciudadSpinner.getSelectedItemId() != 0) log+="Ciudad: "+((Ciudad) binding.ciudadSpinner.getSelectedItem()).getNombre()+"\n";
+        if(binding.tipoSpinner.getSelectedItem().getClass() == Departamento.class) {
+            if (binding.wifiCheckBox.isChecked()) log += "Incluye WiFi: Sí\n";
+            else log += "Incluye WiFi: No\n";
+        }
+
+        //TODO Cantidad de resultados y tiempo de busqueda
+
+        logViewModel.writeLogBusquedas(log);
     }
 }
