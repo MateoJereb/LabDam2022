@@ -1,0 +1,65 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory app:title="Datos personales"
+        app:allowDividerBelow="true">
+
+        <EditTextPreference
+            android:key="mail"
+            android:title="Correo electrónico"
+            app:useSimpleSummaryProvider="true"
+            android:positiveButtonText="Aceptar"
+            android:negativeButtonText="Cancelar"/>
+
+        <EditTextPreference
+            android:key="cuit"
+            app:title="CUIT"
+            android:inputType="number"
+            app:useSimpleSummaryProvider="true"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="Facturación"
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true">
+
+        <ListPreference
+            android:key="metodo_pago"
+            app:title="Método de pago"
+            app:useSimpleSummaryProvider="true"
+            android:entries="@array/metodo_pago_entries"
+            android:entryValues="@array/metodo_pago_values"/>
+
+        <ListPreference
+            android:key="moneda"
+            app:title="Moneda preferida"
+            app:useSimpleSummaryProvider="true"
+            android:entries="@array/moneda_entries"
+            android:entryValues="@array/moneda_values"
+            android:defaultValue="peso"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="Aplicación"
+        app:allowDividerAbove="true">
+
+        <SwitchPreferenceCompat
+            android:key="notificaciones"
+            app:title="Notificaciones"
+            android:summaryOn="Activadas"
+            android:summaryOff="Desactivadas"/>
+
+        <SwitchPreferenceCompat
+            android:key="info_uso"
+            app:title="Guardar información de uso"
+            android:summaryOff="No se guardará información sobre el uso de la aplicación"
+            android:summaryOn="Se guardará información sobre el uso de la aplicación"/>
+
+        <Preference
+            android:key="log"
+            app:title="Ver información de uso"
+            android:dependency="info_uso"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
