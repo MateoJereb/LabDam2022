@@ -11,11 +11,11 @@ import com.mdgz.dam.labdam2022.repo.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class BusquedaViewModel extends AndroidViewModel {
 
     private MutableLiveData<List<Ciudad>> ciudades;
-    private MutableLiveData<List<Alojamiento>> alojamientos;
     private List<Alojamiento> tiposAlojamiento;
 
     public BusquedaViewModel(@NonNull Application application) {
@@ -25,12 +25,6 @@ public class BusquedaViewModel extends AndroidViewModel {
         listaCiudades.add(null);
         listaCiudades.addAll(CiudadRepository._CIUDADES);
         ciudades.setValue(listaCiudades);
-
-        alojamientos = new MutableLiveData<List<Alojamiento>>();
-        List<Alojamiento> listaAlojamientos = new ArrayList<>();
-        listaAlojamientos.add(null);
-        listaAlojamientos.addAll(AlojamientoRepository._ALOJAMIENTOS);
-        alojamientos.setValue(listaAlojamientos);
 
         tiposAlojamiento = new ArrayList<Alojamiento>();
         tiposAlojamiento.add(null);
@@ -42,7 +36,11 @@ public class BusquedaViewModel extends AndroidViewModel {
         return ciudades;
     }
 
-    public MutableLiveData<List<Alojamiento>> getAlojamientos(){
+    public List<Alojamiento> getAlojamientos(Optional<Alojamiento> tipo, Optional<Integer> capacidad, Optional<Double> minPrecio, Optional<Double> maxPrecio, Optional<Ciudad> ciudad, Optional<Boolean> wifi){
+        //TODO filtrar segun criterios de busqueda
+
+        List<Alojamiento> alojamientos = AlojamientoRepository._ALOJAMIENTOS;
+
         return alojamientos;
     }
 

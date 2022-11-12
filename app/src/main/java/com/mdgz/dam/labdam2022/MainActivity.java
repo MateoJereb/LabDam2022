@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.action_config:
-                if(navController.getCurrentDestination().getId() != R.id.settingsFragment)
+                if(navController.getCurrentDestination().getId() != R.id.settingsFragment && navController.getCurrentDestination().getId() != R.id.logFragment)
                     navController.navigate(R.id.to_settingsFragment);
                 break;
         }

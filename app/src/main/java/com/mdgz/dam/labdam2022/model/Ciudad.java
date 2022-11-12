@@ -1,6 +1,8 @@
 package com.mdgz.dam.labdam2022.model;
 
-public class Ciudad {
+import java.io.Serializable;
+
+public class Ciudad implements Serializable {
     Integer id;
     String nombre;
     String abreviatura;

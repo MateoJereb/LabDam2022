@@ -37,7 +37,6 @@ public class BusquedaFragment extends Fragment {
     private FragmentBusquedaBinding binding;
     private NavController navController;
     private BusquedaViewModel busquedaViewModel;
-    private LogViewModel logViewModel;
 
     public BusquedaFragment() {
         // Required empty public constructor
@@ -50,7 +49,6 @@ public class BusquedaFragment extends Fragment {
         }
 
         busquedaViewModel = new ViewModelProvider(requireActivity()).get(BusquedaViewModel.class);
-        logViewModel = new ViewModelProvider(requireActivity()).get(LogViewModel.class);
     }
 
     @Override
@@ -108,13 +106,7 @@ public class BusquedaFragment extends Fragment {
 
         binding.buscarButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireActivity());
-                if(preferences.getBoolean("info_uso",false))
-                    registrarBusqueda();
-
-                navController.navigate(R.id.action_busquedaFragment_to_resultadoBusquedaFragment);
-            }
+            public void onClick(View view) { onBuscar();}
         });
     }
 
@@ -124,25 +116,24 @@ public class BusquedaFragment extends Fragment {
         binding.minPrecioEditText.setText(null);
         binding.maxPrecioEditText.setText(null);
         binding.ciudadSpinner.setSelection(0);
-        binding.wifiCheckBox.setChecked(false);
+        binding.wifiCheckBox.setChecked(true);
     }
 
-    private void registrarBusqueda(){
-        String log = "Búsqueda realizada \n" +
-                     LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))+"\n";
-
-        if(binding.tipoSpinner.getSelectedItemId() != 0) log+="Tipo: "+((Alojamiento) binding.tipoSpinner.getSelectedItem()).toString()+"\n";
-        if(binding.capacidadEditText.getText().length() > 0) log+="Capacidad: "+binding.capacidadEditText.getText().toString()+"\n";
-        if(binding.minPrecioEditText.getText().length() > 0) log+="Precio min: "+binding.minPrecioEditText.getText().toString()+"\n";
-        if(binding.maxPrecioEditText.getText().length() > 0) log+="Precio max: "+binding.maxPrecioEditText.getText().toString()+"\n";
-        if(binding.ciudadSpinner.getSelectedItemId() != 0) log+="Ciudad: "+((Ciudad) binding.ciudadSpinner.getSelectedItem()).getNombre()+"\n";
-        if(binding.tipoSpinner.getSelectedItem().getClass() == Departamento.class) {
-            if (binding.wifiCheckBox.isChecked()) log += "Incluye WiFi: Sí\n";
-            else log += "Incluye WiFi: No\n";
+    private void onBuscar(){
+        Bundle bundle = new Bundle();
+        if(binding.tipoSpinner.getSelectedItemId() != 0) bundle.putSerializable("tipo",(Alojamiento) binding.tipoSpinner.getSelectedItem());
+        if(binding.capacidadEditText.getText().length() > 0) bundle.putInt("capacidad",Integer.parseInt(binding.capacidadEditText.getText().toString()));
+        if(binding.minPrecioEditText.getText().length() > 0) bundle.putDouble("minPrecio",Double.parseDouble(binding.minPrecioEditText.getText().toString()));
+        if(binding.maxPrecioEditText.getText().length() > 0) bundle.putDouble("maxPrecio",Double.parseDouble(binding.maxPrecioEditText.getText().toString()));
+        if(binding.ciudadSpinner.getSelectedItemId() != 0) bundle.putSerializable("ciudad",(Ciudad) binding.ciudadSpinner.getSelectedItem());
+        if(binding.tipoSpinner.getSelectedItemId() == 0){
+            bundle.putBoolean("wifi",binding.wifiCheckBox.isChecked());
+        }
+        else{
+            if(binding.tipoSpinner.getSelectedItem().getClass() == Departamento.class)
+                bundle.putBoolean("wifi",binding.wifiCheckBox.isChecked());
         }
 
-        //TODO Cantidad de resultados y tiempo de busqueda
-
-        logViewModel.writeLogBusquedas(log);
+        navController.navigate(R.id.action_busquedaFragment_to_resultadoBusquedaFragment,bundle);
     }
 }
