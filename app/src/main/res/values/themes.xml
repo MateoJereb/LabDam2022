@@ -112,4 +112,8 @@
     <style name="IconOnText" parent="Theme.LabDam2022">
         <item name="android:tint">@color/grey</item>
     </style>
+
+    <style name="PreferencesScreen" parent="Theme.LabDam2022">
+        <item name="colorSecondary">@color/red_600</item>
+    </style>
 </resources>

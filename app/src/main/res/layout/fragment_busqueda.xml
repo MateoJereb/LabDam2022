@@ -12,7 +12,8 @@
             android:layout_gravity="center"
             android:layout_marginTop="20sp"
             android:layout_marginStart="15sp"
-            android:layout_marginEnd="15sp">
+            android:layout_marginEnd="15sp"
+            android:layout_marginBottom="15sp">
 
             <TextView
                 android:layout_width="match_parent"
@@ -147,7 +148,8 @@
                 android:theme="@style/DefaultCheckBox"
                 android:layout_marginTop="20sp"
                 android:layout_gravity="center"
-                android:text="@string/incluye_wifi"/>
+                android:text="@string/incluye_wifi"
+                android:checked="true"/>
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="wrap_content"

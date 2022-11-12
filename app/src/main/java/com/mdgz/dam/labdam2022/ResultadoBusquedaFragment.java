@@ -1,5 +1,6 @@
 package com.mdgz.dam.labdam2022;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,69 +22,54 @@ import android.widget.Toast;
 
 import com.mdgz.dam.labdam2022.databinding.FragmentResultadoBusquedaBinding;
 import com.mdgz.dam.labdam2022.model.Alojamiento;
+import com.mdgz.dam.labdam2022.model.Ciudad;
 import com.mdgz.dam.labdam2022.recycler_views.AlojamientosAdapter;
 import com.mdgz.dam.labdam2022.repo.AlojamientoRepository;
 import com.mdgz.dam.labdam2022.viewmodels.BusquedaViewModel;
+import com.mdgz.dam.labdam2022.viewmodels.LogViewModel;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ResultadoBusquedaFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ResultadoBusquedaFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private FragmentResultadoBusquedaBinding binding;
     private NavController navController;
     private BusquedaViewModel viewModel;
+    private LogViewModel logViewModel;
 
     private RecyclerView recyclerView;
     private AlojamientosAdapter recyclerAdapter;
+
+    private Optional<Alojamiento> tipo = Optional.ofNullable(null);
+    private Optional<Integer> capacidad = Optional.ofNullable(null);
+    private Optional<Double> minPrecio = Optional.ofNullable(null);
+    private Optional<Double> maxPrecio = Optional.ofNullable(null);
+    private Optional<Ciudad> ciudad = Optional.ofNullable(null);
+    private Optional<Boolean> wifi = Optional.ofNullable(null);
 
 
     public ResultadoBusquedaFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ResultadoBusquedaFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ResultadoBusquedaFragment newInstance(String param1, String param2) {
-        ResultadoBusquedaFragment fragment = new ResultadoBusquedaFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+        if(getArguments() != null) {
+            if(getArguments().getSerializable("tipo") != null) tipo = Optional.of((Alojamiento) getArguments().getSerializable("tipo"));
+            if(getArguments().get("capacidad") != null) capacidad = Optional.of(getArguments().getInt("capacidad"));
+            if(getArguments().get("minPrecio") != null) minPrecio = Optional.of(getArguments().getDouble("minPrecio"));
+            if(getArguments().get("maxPrecio") != null) maxPrecio = Optional.of(getArguments().getDouble("maxPrecio"));
+            if(getArguments().get("ciudad") != null) ciudad = Optional.of((Ciudad) getArguments().getSerializable("ciudad"));
+            if(getArguments().get("wifi") != null) wifi = Optional.of(getArguments().getBoolean("wifi"));
         }
 
         viewModel = new ViewModelProvider(requireActivity()).get(BusquedaViewModel.class);
+        logViewModel = new ViewModelProvider(requireActivity()).get(LogViewModel.class);
     }
 
     @Override
@@ -108,7 +95,11 @@ public class ResultadoBusquedaFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
 
-        List<Alojamiento> listaAloj = AlojamientoRepository._ALOJAMIENTOS;
+        long startTime = System.currentTimeMillis();
+        List<Alojamiento> listaAloj = viewModel.getAlojamientos(tipo,capacidad,minPrecio,maxPrecio,ciudad,wifi);
+        long endTime = System.currentTimeMillis();
+        registrarBusqueda(listaAloj.size(),endTime-startTime);
+
         recyclerAdapter.setListaAlojamientos(listaAloj);
         recyclerView.setAdapter(recyclerAdapter);
 
@@ -118,10 +109,6 @@ public class ResultadoBusquedaFragment extends Fragment {
                 onSeleccion(item);
             }
         });
-
-        /*viewModel.getAlojamientos().observe(getViewLifecycleOwner(), alojamientos -> {
-            recyclerAdapter.setListaAlojamientos(alojamientos);
-        });*/
 
         binding.nuevaBusquedaButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,5 +124,29 @@ public class ResultadoBusquedaFragment extends Fragment {
 
     private void onNuevaBusqueda(){
         requireActivity().onBackPressed();
+    }
+
+    private void registrarBusqueda(int cant, long tiempo){
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireActivity());
+        if(preferences.getBoolean("info_uso",false)){
+            String log = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))+"\n"+
+                    "Búsqueda realizada \n";
+
+            if(tipo.isPresent()) log+="   -Tipo: "+tipo.get().toString()+"\n";
+            if(capacidad.isPresent()) log+="   -Capacidad: "+capacidad.get()+"\n";
+            if(minPrecio.isPresent()) log+="   -Precio min: "+minPrecio.get()+"\n";
+            if(maxPrecio.isPresent()) log+="   -Precio max: "+maxPrecio.get()+"\n";
+            if(ciudad.isPresent()) log+="   -Ciudad: "+ciudad.get().getNombre()+"\n";
+            if(wifi.isPresent()){
+                if(wifi.get()) log+="   -Incluye WiFi: Si"+"\n";
+                else log+="   -Incluye WiFi: No"+"\n";
+            }
+
+            log+= "Resultados: "+cant+"\n"+
+                  "Tiempo de búsqueda: "+tiempo+"ms\n";
+
+            logViewModel.writeLogBusquedas(log);
+        }
+
     }
 }
