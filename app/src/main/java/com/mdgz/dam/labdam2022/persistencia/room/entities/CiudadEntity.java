@@ -1,26 +1,31 @@
-package com.mdgz.dam.labdam2022.model;
+package com.mdgz.dam.labdam2022.persistencia.room.entities;
 
-import java.io.Serializable;
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.util.UUID;
 
-public class Ciudad implements Serializable {
-    UUID id;
-    String nombre;
-    String abreviatura;
+@Entity
+public class CiudadEntity {
+    @PrimaryKey
+    @NonNull
+    private UUID id;
+    private String nombre;
+    private String abreviatura;
 
-    public Ciudad(){}
-
-    public Ciudad(UUID id, String nombre, String abreviatura) {
+    public CiudadEntity(@NonNull UUID id, String nombre, String abreviatura) {
         this.id = id;
         this.nombre = nombre;
         this.abreviatura = abreviatura;
     }
 
+    @NonNull
     public UUID getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(@NonNull UUID id) {
         this.id = id;
     }
 
@@ -38,10 +43,5 @@ public class Ciudad implements Serializable {
 
     public void setAbreviatura(String abreviatura) {
         this.abreviatura = abreviatura;
-    }
-
-    @Override
-    public String toString() {
-        return nombre;
     }
 }
