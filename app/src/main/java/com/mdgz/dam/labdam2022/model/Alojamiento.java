@@ -1,5 +1,7 @@
 package com.mdgz.dam.labdam2022.model;
 
+import android.graphics.Bitmap;
+
 import java.io.Serializable;
 
 public abstract class Alojamiento implements Serializable{
@@ -10,6 +12,7 @@ public abstract class Alojamiento implements Serializable{
     protected Integer capacidad;
     protected Double precioBase;
     protected Boolean favorito;
+    protected Bitmap imagen;
 
     public abstract Ubicacion getUbicacion();
     public Double costoDia(){
@@ -20,13 +23,14 @@ public abstract class Alojamiento implements Serializable{
         super();
     }
 
-    public Alojamiento(Integer id, String titulo, String descripcion, Integer capacidad, Double precioBase, Boolean favorito) {
+    public Alojamiento(Integer id, String titulo, String descripcion, Integer capacidad, Double precioBase, Boolean favorito, Bitmap imagen) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.capacidad = capacidad;
         this.precioBase = precioBase;
         this.favorito = favorito;
+        this.imagen = imagen;
     }
 
     public Integer getId() {
@@ -52,4 +56,8 @@ public abstract class Alojamiento implements Serializable{
     public Boolean getFavorito() {
         return favorito;
     }
+
+    public Bitmap getImagen() { return imagen; }
+
+    public void setImagen(Bitmap imagen) { this.imagen = imagen; }
 }

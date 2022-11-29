@@ -1,4 +1,4 @@
-package com.mdgz.dam.labdam2022;
+package com.mdgz.dam.labdam2022.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.Window;
 import android.window.SplashScreen;
 
+import com.mdgz.dam.labdam2022.R;
 import com.mdgz.dam.labdam2022.databinding.*;
 import com.mdgz.dam.labdam2022.viewmodels.BusquedaViewModel;
 

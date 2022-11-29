@@ -1,4 +1,4 @@
-package com.mdgz.dam.labdam2022;
+package com.mdgz.dam.labdam2022.ui;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -22,6 +22,7 @@ import android.view.ViewStub;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
+import com.mdgz.dam.labdam2022.R;
 import com.mdgz.dam.labdam2022.databinding.FragmentDetalleAlojamientoBinding;
 import com.mdgz.dam.labdam2022.model.Alojamiento;
 import com.mdgz.dam.labdam2022.model.Departamento;
