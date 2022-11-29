@@ -1,9 +1,7 @@
 package com.mdgz.dam.labdam2022.model;
 
-import java.util.UUID;
-
 public class Hotel {
-    UUID id;
+    Integer id;
     String nombre;
     Integer categoria;
     Ubicacion ubicacion;
@@ -12,18 +10,18 @@ public class Hotel {
         super();
     }
 
-    public Hotel(UUID id, String nombre, Integer categoria, Ubicacion ubicacion) {
+    public Hotel(Integer id, String nombre, Integer categoria, Ubicacion ubicacion) {
         this.id = id;
         this.nombre = nombre;
         this.categoria = categoria;
         this.ubicacion = ubicacion;
     }
 
-    public UUID getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

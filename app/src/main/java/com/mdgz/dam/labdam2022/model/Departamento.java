@@ -1,7 +1,5 @@
 package com.mdgz.dam.labdam2022.model;
 
-import java.util.UUID;
-
 public class Departamento extends Alojamiento{
 
     private Boolean tieneWifi;
@@ -17,8 +15,8 @@ public class Departamento extends Alojamiento{
         super();
     }
 
-    public Departamento(UUID id, String titulo, String descripcion, Integer capacidad, Double precioBase, Boolean favorito, Boolean tieneWifi, Double costoLimpieza, Integer cantidadHabitaciones, Ubicacion ubicacion,byte[] imagen) {
-        super(id, titulo, descripcion, capacidad, precioBase,favorito,imagen);
+    public Departamento(Integer id, String titulo, String descripcion, Integer capacidad, Double precioBase, Boolean favorito, Boolean tieneWifi, Double costoLimpieza, Integer cantidadHabitaciones,Ubicacion ubicacion) {
+        super(id, titulo, descripcion, capacidad, precioBase,favorito);
         this.tieneWifi = tieneWifi;
         this.costoLimpieza = costoLimpieza;
         this.cantidadHabitaciones = cantidadHabitaciones;

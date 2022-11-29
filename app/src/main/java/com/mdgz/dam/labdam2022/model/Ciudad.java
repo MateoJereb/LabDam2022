@@ -1,26 +1,25 @@
 package com.mdgz.dam.labdam2022.model;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 public class Ciudad implements Serializable {
-    UUID id;
+    Integer id;
     String nombre;
     String abreviatura;
 
     public Ciudad(){}
 
-    public Ciudad(UUID id, String nombre, String abreviatura) {
+    public Ciudad(Integer id, String nombre, String abreviatura) {
         this.id = id;
         this.nombre = nombre;
         this.abreviatura = abreviatura;
     }
 
-    public UUID getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

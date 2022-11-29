@@ -1,17 +1,15 @@
 package com.mdgz.dam.labdam2022.model;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 public abstract class Alojamiento implements Serializable{
 
-    protected UUID id;
+    protected Integer id;
     protected String titulo;
     protected String descripcion;
     protected Integer capacidad;
     protected Double precioBase;
     protected Boolean favorito;
-    protected byte[] imagen;
 
     public abstract Ubicacion getUbicacion();
     public Double costoDia(){
@@ -22,17 +20,16 @@ public abstract class Alojamiento implements Serializable{
         super();
     }
 
-    public Alojamiento(UUID id, String titulo, String descripcion, Integer capacidad, Double precioBase, Boolean favorito, byte[] imagen) {
+    public Alojamiento(Integer id, String titulo, String descripcion, Integer capacidad, Double precioBase, Boolean favorito) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.capacidad = capacidad;
         this.precioBase = precioBase;
         this.favorito = favorito;
-        this.imagen = imagen;
     }
 
-    public UUID getId() {
+    public Integer getId() {
         return id;
     }
 
