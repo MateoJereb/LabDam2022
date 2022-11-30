@@ -21,4 +21,8 @@ public class AlojamientoMapper {
                 aloj.getImagen()
         );
     }
+
+    public static List<AlojamientoEntity> toEntities(final List<Alojamiento> l){
+        return l.stream().map(a -> toEntity(a)).collect(Collectors.toList());
+    }
 }

@@ -5,6 +5,9 @@ import com.mdgz.dam.labdam2022.model.Hotel;
 import com.mdgz.dam.labdam2022.persistencia.room.entity.AlojamientoEntity;
 import com.mdgz.dam.labdam2022.persistencia.room.entity.HabitacionEntity;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class HabitacionMapper {
     public HabitacionMapper() {
     }
@@ -20,9 +23,7 @@ public class HabitacionMapper {
         );
     }
 
-    public static Habitacion fromEntity(HabitacionEntity hab){
-        //TODO getAlojamiento
-        AlojamientoEntity aloj = new AlojamientoEntity();
+    public static Habitacion fromEntity(HabitacionEntity hab, AlojamientoEntity aloj){
         return new Habitacion(
                 aloj.getId(),
                 aloj.getTitulo(),
@@ -36,5 +37,9 @@ public class HabitacionMapper {
                 new Hotel(), //TODO getHotel
                 aloj.getImagen()
         );
+    }
+
+    public static List<HabitacionEntity> toEntities(List<Habitacion> l){
+        return l.stream().map(h -> toEntity(h)).collect(Collectors.toList());
     }
 }

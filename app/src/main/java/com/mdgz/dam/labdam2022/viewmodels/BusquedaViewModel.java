@@ -7,13 +7,14 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.mdgz.dam.labdam2022.model.*;
+import com.mdgz.dam.labdam2022.persistencia.OnResult;
 import com.mdgz.dam.labdam2022.repo.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class BusquedaViewModel extends AndroidViewModel {
+public class BusquedaViewModel extends AndroidViewModel implements OnResult<List<Alojamiento>> {
 
     private MutableLiveData<List<Ciudad>> ciudades;
     private List<Alojamiento> tiposAlojamiento;
@@ -37,8 +38,6 @@ public class BusquedaViewModel extends AndroidViewModel {
     }
 
     public List<Alojamiento> getAlojamientos(Optional<Alojamiento> tipo, Optional<Integer> capacidad, Optional<Double> minPrecio, Optional<Double> maxPrecio, Optional<Ciudad> ciudad, Optional<Boolean> wifi){
-        //TODO filtrar segun criterios de busqueda
-
         List<Alojamiento> alojamientos = AlojamientoRepository._ALOJAMIENTOS;
 
         return alojamientos;
@@ -48,4 +47,13 @@ public class BusquedaViewModel extends AndroidViewModel {
         return tiposAlojamiento;
     }
 
+    @Override
+    public void onSuccess(List<Alojamiento> result) {
+
+    }
+
+    @Override
+    public void onError(Throwable exception) {
+
+    }
 }

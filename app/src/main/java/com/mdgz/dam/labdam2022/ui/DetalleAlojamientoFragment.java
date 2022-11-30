@@ -111,6 +111,7 @@ public class DetalleAlojamientoFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        binding.imageView.setImageResource(alojamiento.getImagen());
         binding.tituloTextView.setText(alojamiento.getTitulo());
         binding.descripcionTextView.setText(alojamiento.getDescripcion());
         binding.favoritoCheckBox.setChecked(alojamiento.getFavorito());

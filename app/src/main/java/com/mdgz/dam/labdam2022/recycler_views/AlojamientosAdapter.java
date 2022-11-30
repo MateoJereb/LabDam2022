@@ -87,6 +87,7 @@ public class AlojamientosAdapter extends RecyclerView.Adapter<AlojamientosAdapte
                     listener.onItemClick(alojamiento);
                 }
             });
+            imagen.setImageResource(alojamiento.getImagen());
         }
     }
 }

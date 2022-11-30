@@ -23,10 +23,7 @@ public class DepartamentoMapper {
         );
     }
 
-    public static Departamento fromEntity(DepartamentoEntity dpto){
-        //TODO getAlojamiento
-        AlojamientoEntity aloj = new AlojamientoEntity();
-
+    public static Departamento fromEntity(DepartamentoEntity dpto, AlojamientoEntity aloj){
         return new Departamento(
                 aloj.getId(),
                 aloj.getTitulo(),
@@ -40,5 +37,9 @@ public class DepartamentoMapper {
                 new Ubicacion(), //TODO getUbicacion
                 aloj.getImagen()
         );
+    }
+
+    public static List<DepartamentoEntity> toEntities(List<Departamento> l){
+        return l.stream().map(d -> toEntity(d)).collect(Collectors.toList());
     }
 }

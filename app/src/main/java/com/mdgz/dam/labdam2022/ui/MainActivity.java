@@ -23,6 +23,7 @@ import android.window.SplashScreen;
 
 import com.mdgz.dam.labdam2022.R;
 import com.mdgz.dam.labdam2022.databinding.*;
+import com.mdgz.dam.labdam2022.persistencia.room.AppDataBase;
 import com.mdgz.dam.labdam2022.viewmodels.BusquedaViewModel;
 
 public class MainActivity extends AppCompatActivity {

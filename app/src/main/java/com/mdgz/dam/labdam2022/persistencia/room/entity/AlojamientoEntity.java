@@ -18,12 +18,12 @@ public class AlojamientoEntity {
     @ColumnInfo(name = "precio_base")
     protected Double precioBase;
     protected Boolean favorito;
-    protected Bitmap imagen;
+    protected Integer imagen;
 
     public AlojamientoEntity() {
     }
 
-    public AlojamientoEntity(@NonNull Integer id, String titulo, String descripcion, Integer capacidad, Double precioBase, Boolean favorito, Bitmap imagen) {
+    public AlojamientoEntity(@NonNull Integer id, String titulo, String descripcion, Integer capacidad, Double precioBase, Boolean favorito, Integer imagen) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -82,11 +82,11 @@ public class AlojamientoEntity {
         this.favorito = favorito;
     }
 
-    public Bitmap getImagen() {
+    public Integer getImagen() {
         return imagen;
     }
 
-    public void setImagen(Bitmap imagen) {
+    public void setImagen(Integer imagen) {
         this.imagen = imagen;
     }
 }

@@ -3,6 +3,9 @@ package com.mdgz.dam.labdam2022.persistencia.room.mapper;
 import com.mdgz.dam.labdam2022.model.Reserva;
 import com.mdgz.dam.labdam2022.persistencia.room.entity.ReservaEntity;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class ReservaMapper {
     public ReservaMapper() {
     }
@@ -29,5 +32,9 @@ public class ReservaMapper {
                 res.getAlojamientoID(),
                 res.getUsuarioID()
         );
+    }
+
+    public static List<ReservaEntity> toEntities(List<Reserva> l){
+        return l.stream().map(r -> toEntity(r)).collect(Collectors.toList());
     }
 }

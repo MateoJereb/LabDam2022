@@ -1,5 +1,9 @@
 package com.mdgz.dam.labdam2022.repo;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import com.mdgz.dam.labdam2022.R;
 import com.mdgz.dam.labdam2022.model.Alojamiento;
 import com.mdgz.dam.labdam2022.model.Departamento;
 import com.mdgz.dam.labdam2022.model.Habitacion;
@@ -14,8 +18,8 @@ public class AlojamientoRepository {
     private static final Ubicacion ubicacion2 = new Ubicacion(-42.25,-38.2,"Lopez y Planes","2007",CiudadRepository._CIUDADES.get(1));
 
     public static final List<Alojamiento> _ALOJAMIENTOS = List.of(
-            new Departamento(1, "Depto 1", "Luminoso y amplio", 6, 300.0,false,true, 1500.0, 3,ubicacion1,null),
-            new Habitacion(2, "Habitacion 2", "Espectacular suite",4, 1200.0, false, 2,1,false,new Hotel(1,"Hotel 1",3,ubicacion2),null )
+            new Departamento(1, "Depto 1", "Luminoso y amplio", 6, 300.0,false,true, 1500.0, 3,ubicacion1,R.drawable.dpto1),
+            new Habitacion(2, "Habitacion 2", "Espectacular suite",4, 1200.0, false, 2,1,false,new Hotel(1,"Hotel 1",3,ubicacion2),R.drawable.hab1)
     );
 
     public List<Alojamiento> listaCiudades(){

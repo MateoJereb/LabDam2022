@@ -13,38 +13,38 @@ import java.util.List;
 @Dao
 public interface AlojamientoDAO {
     @Insert
-    void insertarAlojamiento(AlojamientoEntity alojamiento);
+    void guardarAlojamiento(AlojamientoEntity alojamiento);
 
     @Insert
-    void insertarAlojamientos(List<AlojamientoEntity> alojamientos);
+    void guardarAlojamientos(List<AlojamientoEntity> alojamientos);
 
     @Insert
-    void insertarDepartamento(DepartamentoEntity dpto);
+    void guardarDepartamento(DepartamentoEntity dpto);
 
     @Insert
-    void insertarDepartamentos(List<DepartamentoEntity> dptos);
+    void guardarDepartamentos(List<DepartamentoEntity> dptos);
 
     @Insert
-    void insertarHabitacion(HabitacionEntity habitacion);
+    void guardarHabitacion(HabitacionEntity habitacion);
 
     @Insert
-    void insertarHabitaciones(List<HabitacionEntity> habitaciones);
+    void guardarHabitaciones(List<HabitacionEntity> habitaciones);
 
     @Query("SELECT * FROM alojamiento")
     List<AlojamientoEntity> recuperarAlojamientos();
 
     @Query("SELECT * FROM alojamiento WHERE id=:idAloj")
-    List<AlojamientoEntity> buscarAlojamiento(Integer idAloj);
+    AlojamientoEntity buscarAlojamiento(Integer idAloj);
 
     @Query("SELECT * FROM departamento")
     List<DepartamentoEntity> recuperarDepartamentos();
 
     @Query("SELECT * FROM departamento WHERE id=:idDpto")
-    List<DepartamentoEntity> buscarDepartamento(Integer idDpto);
+    DepartamentoEntity buscarDepartamento(Integer idDpto);
 
     @Query("SELECT * FROM habitacion")
     List<HabitacionEntity> recuperarHabitaciones();
 
     @Query("SELECT * FROM habitacion WHERE id=:idHab")
-    List<HabitacionEntity> buscarHabitacion(Integer idHab);
+    HabitacionEntity buscarHabitacion(Integer idHab);
 }

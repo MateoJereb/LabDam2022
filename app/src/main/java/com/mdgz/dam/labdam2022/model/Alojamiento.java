@@ -12,7 +12,7 @@ public abstract class Alojamiento implements Serializable{
     protected Integer capacidad;
     protected Double precioBase;
     protected Boolean favorito;
-    protected Bitmap imagen;
+    protected Integer imagen;
 
     public abstract Ubicacion getUbicacion();
     public Double costoDia(){
@@ -23,7 +23,7 @@ public abstract class Alojamiento implements Serializable{
         super();
     }
 
-    public Alojamiento(Integer id, String titulo, String descripcion, Integer capacidad, Double precioBase, Boolean favorito, Bitmap imagen) {
+    public Alojamiento(Integer id, String titulo, String descripcion, Integer capacidad, Double precioBase, Boolean favorito, Integer imagen) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -57,7 +57,7 @@ public abstract class Alojamiento implements Serializable{
         return favorito;
     }
 
-    public Bitmap getImagen() { return imagen; }
+    public Integer getImagen() { return imagen; }
 
-    public void setImagen(Bitmap imagen) { this.imagen = imagen; }
+    public void setImagen(Integer imagen) { this.imagen = imagen; }
 }
