@@ -25,7 +25,7 @@ public class DepartamentoEntity {
     @ColumnInfo(name = "cantidad_habitaciones")
     private Integer cantidadHabitaciones;
 
-    @Ignore
+    @ColumnInfo(name = "id_ubicacion")
     private Integer ubicacionID;
 
     @ColumnInfo(name = "id_alojamiento")

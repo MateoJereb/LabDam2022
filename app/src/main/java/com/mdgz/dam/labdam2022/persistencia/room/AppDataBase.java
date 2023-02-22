@@ -47,26 +47,24 @@ public abstract class AppDataBase extends RoomDatabase {
     }
 
     private static AppDataBase buildDatabase(final Context context){
-        return Room.databaseBuilder(context,AppDataBase.class,"db_utnbnb").addCallback(builderCallback).build();
+        return Room.databaseBuilder(context,AppDataBase.class,"db_utnbnb").addCallback(new Callback() {
+            @Override
+            public void onCreate(@NonNull SupportSQLiteDatabase db) {
+                super.onCreate(db);
+                executor.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        List<Alojamiento> alojamientos = AlojamientoRepository.alojamientosIniciales;
+                        List<Departamento> dptos = alojamientos.stream().filter(a -> a.getClass() == Departamento.class).map(d -> (Departamento) d).collect(Collectors.toList());
+                        List<Habitacion> habs = alojamientos.stream().filter(a -> a.getClass() == Habitacion.class).map(h -> (Habitacion) h).collect(Collectors.toList());
+
+                        getInstance(context).alojamientoDAO().guardarAlojamientos(AlojamientoMapper.toEntities(alojamientos));
+                        getInstance(context).alojamientoDAO().guardarDepartamentos(DepartamentoMapper.toEntities(dptos));
+                        getInstance(context).alojamientoDAO().guardarHabitaciones(HabitacionMapper.toEntities(habs));
+                    }
+                });
+            }
+        }).build();
     }
-
-    private static final RoomDatabase.Callback builderCallback = new Callback() {
-        @Override
-        public void onCreate(@NonNull SupportSQLiteDatabase db) {
-            super.onCreate(db);
-            executor.execute(new Runnable() {
-                @Override
-                public void run() {
-                    List<Alojamiento> alojamientos = AlojamientoRepository._ALOJAMIENTOS;
-                    List<Departamento> dptos = alojamientos.stream().filter(a -> a.getClass() == Departamento.class).map(d -> (Departamento) d).collect(Collectors.toList());
-                    List<Habitacion> habs = alojamientos.stream().filter(a -> a.getClass() == Habitacion.class).map(h -> (Habitacion) h).collect(Collectors.toList());
-
-                    instance.alojamientoDAO().guardarAlojamientos(AlojamientoMapper.toEntities(alojamientos));
-                    instance.alojamientoDAO().guardarDepartamentos(DepartamentoMapper.toEntities(dptos));
-                    instance.alojamientoDAO().guardarHabitaciones(HabitacionMapper.toEntities(habs));
-                }
-            });
-        }
-    };
 
 }

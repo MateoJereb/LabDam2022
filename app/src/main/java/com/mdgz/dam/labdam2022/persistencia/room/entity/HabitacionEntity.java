@@ -23,7 +23,7 @@ public class HabitacionEntity {
     @ColumnInfo(name = "tiene_estacionamiento")
     private Boolean tieneEstacionamiento;
 
-    @Ignore
+    @ColumnInfo(name = "id_hotel")
     private Integer hotelID;
 
     @ColumnInfo(name = "id_alojamiento")

@@ -4,6 +4,7 @@ import com.mdgz.dam.labdam2022.model.Departamento;
 import com.mdgz.dam.labdam2022.model.Ubicacion;
 import com.mdgz.dam.labdam2022.persistencia.room.entity.AlojamientoEntity;
 import com.mdgz.dam.labdam2022.persistencia.room.entity.DepartamentoEntity;
+import com.mdgz.dam.labdam2022.repo.AlojamientoRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,7 +35,7 @@ public class DepartamentoMapper {
                 dpto.getTieneWifi(),
                 dpto.getCostoLimpieza(),
                 dpto.getCantidadHabitaciones(),
-                new Ubicacion(), //TODO getUbicacion
+                AlojamientoRepository._UBICACIONES.stream().filter(u -> u.getId() == dpto.getUbicacionID()).findFirst().get(),
                 aloj.getImagen()
         );
     }

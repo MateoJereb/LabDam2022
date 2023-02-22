@@ -9,4 +9,6 @@ public interface FavoritoDataSource {
     void guardarFavorito(Favorito favorito, OnResult<Void> callback);
 
     void recuperarFavoritos(OnResult<List<Favorito>> callback);
+
+    void eliminarFavorito(Favorito favorito, OnResult<Void> callback);
 }

@@ -4,6 +4,7 @@ import com.mdgz.dam.labdam2022.model.Habitacion;
 import com.mdgz.dam.labdam2022.model.Hotel;
 import com.mdgz.dam.labdam2022.persistencia.room.entity.AlojamientoEntity;
 import com.mdgz.dam.labdam2022.persistencia.room.entity.HabitacionEntity;
+import com.mdgz.dam.labdam2022.repo.AlojamientoRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,7 +35,7 @@ public class HabitacionMapper {
                 hab.getCamasIndividuales(),
                 hab.getCamasMatrimoniales(),
                 hab.getTieneEstacionamiento(),
-                new Hotel(), //TODO getHotel
+                AlojamientoRepository._HOTELES.stream().filter(h -> h.getId() == hab.getHotelID()).findFirst().get(),
                 aloj.getImagen()
         );
     }

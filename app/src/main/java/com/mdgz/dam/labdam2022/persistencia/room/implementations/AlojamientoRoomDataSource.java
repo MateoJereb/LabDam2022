@@ -127,6 +127,11 @@ public class AlojamientoRoomDataSource implements AlojamientoDataSource {
 
     @Override
     public void buscarPorId(Integer id, OnResult<List<Alojamiento>> callback) {
-        //TODO
+        try{
+            //TODO
+        }
+        catch (final Exception e){
+            callback.onError(e);
+        }
     }
 }

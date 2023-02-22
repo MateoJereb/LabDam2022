@@ -19,8 +19,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mdgz.dam.labdam2022.R;
 import com.mdgz.dam.labdam2022.databinding.FragmentDetalleAlojamientoBinding;
@@ -200,6 +202,19 @@ public class DetalleAlojamientoFragment extends Fragment {
 
                 dialog.getDatePicker().setMinDate(System.currentTimeMillis());
                 dialog.show();
+            }
+        });
+
+        binding.favoritoCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean newValue) {
+                Toast toast = Toast.makeText(getContext(),"Modificado",Toast.LENGTH_SHORT);
+                toast.show();
+
+                new Thread(() -> {
+                    if(newValue) viewModel.marcarFavorito(alojamiento);
+                    else viewModel.desmarcarFavorito(alojamiento);
+                }).start();
             }
         });
 

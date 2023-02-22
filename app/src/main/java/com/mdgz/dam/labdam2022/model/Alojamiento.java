@@ -57,6 +57,8 @@ public abstract class Alojamiento implements Serializable{
         return favorito;
     }
 
+    public void setFavorito(Boolean favorito) { this.favorito = favorito; }
+
     public Integer getImagen() { return imagen; }
 
     public void setImagen(Integer imagen) { this.imagen = imagen; }
