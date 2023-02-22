@@ -9,6 +9,7 @@ import com.mdgz.dam.labdam2022.persistencia.room.entity.DepartamentoEntity;
 import com.mdgz.dam.labdam2022.persistencia.room.entity.HabitacionEntity;
 
 import java.util.List;
+import java.util.UUID;
 
 @Dao
 public interface AlojamientoDAO {
@@ -34,17 +35,17 @@ public interface AlojamientoDAO {
     List<AlojamientoEntity> recuperarAlojamientos();
 
     @Query("SELECT * FROM alojamiento WHERE id=:idAloj")
-    AlojamientoEntity buscarAlojamiento(Integer idAloj);
+    AlojamientoEntity buscarAlojamiento(UUID idAloj);
 
     @Query("SELECT * FROM departamento")
     List<DepartamentoEntity> recuperarDepartamentos();
 
     @Query("SELECT * FROM departamento WHERE id=:idDpto")
-    DepartamentoEntity buscarDepartamento(Integer idDpto);
+    DepartamentoEntity buscarDepartamento(UUID idDpto);
 
     @Query("SELECT * FROM habitacion")
     List<HabitacionEntity> recuperarHabitaciones();
 
     @Query("SELECT * FROM habitacion WHERE id=:idHab")
-    HabitacionEntity buscarHabitacion(Integer idHab);
+    HabitacionEntity buscarHabitacion(UUID idHab);
 }

@@ -9,12 +9,14 @@ import androidx.room.PrimaryKey;
 
 import com.mdgz.dam.labdam2022.model.Ubicacion;
 
+import java.util.UUID;
+
 @Entity(tableName = "departamento",
         foreignKeys = {@ForeignKey(entity = AlojamientoEntity.class,parentColumns = "id",childColumns = "id_alojamiento",onDelete = ForeignKey.CASCADE,onUpdate = ForeignKey.CASCADE)})
 public class DepartamentoEntity {
     @PrimaryKey
     @NonNull
-    private Integer id;
+    private UUID id;
 
     @ColumnInfo(name = "tiene_wifi")
     private Boolean tieneWifi;
@@ -29,12 +31,12 @@ public class DepartamentoEntity {
     private Integer ubicacionID;
 
     @ColumnInfo(name = "id_alojamiento")
-    private Integer alojamientoID;
+    private UUID alojamientoID;
 
     public DepartamentoEntity() {
     }
 
-    public DepartamentoEntity(@NonNull Integer id, Boolean tieneWifi, Double costoLimpieza, Integer cantidadHabitaciones, Integer ubicacionID, Integer alojamientoID) {
+    public DepartamentoEntity(@NonNull UUID id, Boolean tieneWifi, Double costoLimpieza, Integer cantidadHabitaciones, Integer ubicacionID, UUID alojamientoID) {
         this.id = id;
         this.tieneWifi = tieneWifi;
         this.costoLimpieza = costoLimpieza;
@@ -44,11 +46,11 @@ public class DepartamentoEntity {
     }
 
     @NonNull
-    public Integer getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(@NonNull Integer id) {
+    public void setId(@NonNull UUID id) {
         this.id = id;
     }
 
@@ -84,11 +86,11 @@ public class DepartamentoEntity {
         this.ubicacionID = ubicacionID;
     }
 
-    public Integer getAlojamientoID() {
+    public UUID getAlojamientoID() {
         return alojamientoID;
     }
 
-    public void setAlojamientoID(Integer alojamientoID) {
+    public void setAlojamientoID(UUID alojamientoID) {
         this.alojamientoID = alojamientoID;
     }
 }

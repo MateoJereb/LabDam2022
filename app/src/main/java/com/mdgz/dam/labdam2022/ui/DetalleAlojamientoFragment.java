@@ -208,9 +208,6 @@ public class DetalleAlojamientoFragment extends Fragment {
         binding.favoritoCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean newValue) {
-                Toast toast = Toast.makeText(getContext(),"Modificado",Toast.LENGTH_SHORT);
-                toast.show();
-
                 new Thread(() -> {
                     if(newValue) viewModel.marcarFavorito(alojamiento);
                     else viewModel.desmarcarFavorito(alojamiento);

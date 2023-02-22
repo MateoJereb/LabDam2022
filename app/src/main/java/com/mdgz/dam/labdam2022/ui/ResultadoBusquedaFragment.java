@@ -30,6 +30,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Optional;
 
 public class ResultadoBusquedaFragment extends Fragment {
@@ -93,13 +95,14 @@ public class ResultadoBusquedaFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
 
-        long startTime = System.currentTimeMillis();
-        List<Alojamiento> listaAloj = viewModel.getAlojamientos(tipo,capacidad,minPrecio,maxPrecio,ciudad,wifi);
-        long endTime = System.currentTimeMillis();
-        registrarBusqueda(listaAloj.size(),endTime-startTime);
-
-        recyclerAdapter.setListaAlojamientos(listaAloj);
-        recyclerView.setAdapter(recyclerAdapter);
+        viewModel.getAlojamientos().observe(requireActivity(), new androidx.lifecycle.Observer<List<Alojamiento>>() {
+            @Override
+            public void onChanged(List<Alojamiento> alojamientos) {
+                registrarBusqueda(alojamientos.size(),0);
+                recyclerAdapter.setListaAlojamientos(alojamientos);
+                recyclerView.setAdapter(recyclerAdapter);
+            }
+        });
 
         recyclerAdapter.setOnItemClickListener(new AlojamientosAdapter.OnItemClickListener(){
             @Override

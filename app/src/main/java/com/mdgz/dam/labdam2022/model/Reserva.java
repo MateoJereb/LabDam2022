@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public class Reserva {
 
-    private Integer id;
+    private UUID id;
     private Date fechaIngreso;
     private Date fechaEgreso;
     private Boolean cancelada;
@@ -18,7 +18,7 @@ public class Reserva {
     public Reserva() {
     }
 
-    public Reserva(Integer id, Date fechaIngreso, Date fechaEgreso, Boolean cancelada, Double monto, UUID alojamientoID, UUID usuarioID) {
+    public Reserva(UUID id, Date fechaIngreso, Date fechaEgreso, Boolean cancelada, Double monto, UUID alojamientoID, UUID usuarioID) {
         this.id = id;
         this.fechaIngreso = fechaIngreso;
         this.fechaEgreso = fechaEgreso;
@@ -28,11 +28,11 @@ public class Reserva {
         this.usuarioID = usuarioID;
     }
 
-    public Integer getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

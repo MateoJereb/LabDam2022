@@ -15,6 +15,7 @@ import com.mdgz.dam.labdam2022.persistencia.datasource.AlojamientoDataSource;
 import com.mdgz.dam.labdam2022.persistencia.room.implementations.AlojamientoRoomDataSource;
 
 import java.util.List;
+import java.util.UUID;
 
 public class AlojamientoRepository {
 
@@ -29,8 +30,8 @@ public class AlojamientoRepository {
 
     public static final List<Hotel> _HOTELES = List.of(hotel1);
 
-    public static final List<Alojamiento> alojamientosIniciales = List.of(new Departamento(1, "Depto 1", "Luminoso y amplio", 6, 300.0,false,true, 1500.0, 3,ubicacion1,R.drawable.dpto1),
-            new Habitacion(2, "Habitacion 2", "Espectacular suite",4, 1200.0, false, 2,1,false,hotel1,R.drawable.hab1)
+    public static final List<Alojamiento> alojamientosIniciales = List.of(new Departamento(UUID.fromString("193fb10e-34fa-4223-8bff-53001da9cbaf"), "Depto 1", "Luminoso y amplio", 6, 300.0,false,true, 1500.0, 3,ubicacion1,R.drawable.dpto1),
+            new Habitacion(UUID.fromString("a6584d68-b48f-4829-989d-c069bb44e4d8"), "Habitacion 2", "Espectacular suite",4, 1200.0, false, 2,1,false,hotel1,R.drawable.hab1)
     );
 
     public AlojamientoRepository(Context context){

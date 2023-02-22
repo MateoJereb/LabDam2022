@@ -7,12 +7,14 @@ import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.util.UUID;
+
 @Entity(tableName = "habitacion",
         foreignKeys = {@ForeignKey(entity = AlojamientoEntity.class,parentColumns = "id",childColumns = "id_alojamiento",onDelete = ForeignKey.CASCADE,onUpdate = ForeignKey.CASCADE)})
 public class HabitacionEntity {
     @PrimaryKey
     @NonNull
-    private Integer id;
+    private UUID id;
 
     @ColumnInfo(name = "camas_individuales")
     private Integer camasIndividuales;
@@ -27,12 +29,12 @@ public class HabitacionEntity {
     private Integer hotelID;
 
     @ColumnInfo(name = "id_alojamiento")
-    private Integer alojamientoID;
+    private UUID alojamientoID;
 
     public HabitacionEntity() {
     }
 
-    public HabitacionEntity(@NonNull Integer id, Integer camasIndividuales, Integer camasMatrimoniales, Boolean tieneEstacionamiento, Integer hotelID, Integer alojamientoID) {
+    public HabitacionEntity(@NonNull UUID id, Integer camasIndividuales, Integer camasMatrimoniales, Boolean tieneEstacionamiento, Integer hotelID, UUID alojamientoID) {
         this.id = id;
         this.camasIndividuales = camasIndividuales;
         this.camasMatrimoniales = camasMatrimoniales;
@@ -42,11 +44,11 @@ public class HabitacionEntity {
     }
 
     @NonNull
-    public Integer getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(@NonNull Integer id) {
+    public void setId(@NonNull UUID id) {
         this.id = id;
     }
 
@@ -82,11 +84,11 @@ public class HabitacionEntity {
         this.hotelID = hotelID;
     }
 
-    public Integer getAlojamientoID() {
+    public UUID getAlojamientoID() {
         return alojamientoID;
     }
 
-    public void setAlojamientoID(Integer alojamientoID) {
+    public void setAlojamientoID(UUID alojamientoID) {
         this.alojamientoID = alojamientoID;
     }
 }

@@ -14,7 +14,7 @@ import java.util.UUID;
 public class ReservaEntity {
     @PrimaryKey
     @NonNull
-    private Integer id;
+    private UUID id;
 
     @ColumnInfo(name = "fecha_ingreso")
     private Date fechaIngreso;
@@ -35,7 +35,7 @@ public class ReservaEntity {
     public ReservaEntity() {
     }
 
-    public ReservaEntity(@NonNull Integer id, Date fechaIngreso, Date fechaEgreso, Boolean cancelada, Double monto, UUID alojamientoID, UUID usuarioID) {
+    public ReservaEntity(@NonNull UUID id, Date fechaIngreso, Date fechaEgreso, Boolean cancelada, Double monto, UUID alojamientoID, UUID usuarioID) {
         this.id = id;
         this.fechaIngreso = fechaIngreso;
         this.fechaEgreso = fechaEgreso;
@@ -46,11 +46,11 @@ public class ReservaEntity {
     }
 
     @NonNull
-    public Integer getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(@NonNull Integer id) {
+    public void setId(@NonNull UUID id) {
         this.id = id;
     }
 

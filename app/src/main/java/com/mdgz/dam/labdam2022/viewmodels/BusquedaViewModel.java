@@ -23,7 +23,7 @@ public class BusquedaViewModel extends AndroidViewModel {
     private List<Alojamiento> tiposAlojamiento;
 
     private final AlojamientoRepository alojRepository;
-    private List<Alojamiento> alojamientos = new ArrayList<>();
+    private MutableLiveData<List<Alojamiento>> alojamientos = new MutableLiveData<>(new ArrayList<>());
 
     private final FavoritoRepository favoritoRepository;
     private List<Favorito> favoritos = new ArrayList<>();
@@ -43,31 +43,28 @@ public class BusquedaViewModel extends AndroidViewModel {
         tiposAlojamiento.add(new Habitacion());
 
         alojRepository = new AlojamientoRepository(application);
+        favoritoRepository = new FavoritoRepository(application);
+
         new Thread(() -> {
             alojRepository.recuperarAlojamientos(alojCallback);
-        }).start();
-
-        favoritoRepository = new FavoritoRepository(application);
-        new Thread(() -> {
             favoritoRepository.recuperarFavorito(favCallback);
-        }).start();
 
-
-        for(Favorito f : favoritos){
-            for(Alojamiento a : alojamientos){
-                if(a.getId().toString() == f.getAlojamientoID().toString()){
-                    a.setFavorito(true);
-                    break;
+            for(Favorito f : favoritos){
+                for(Alojamiento a : alojamientos.getValue()){
+                    if(a.getId().equals(f.getAlojamientoID())){
+                        a.setFavorito(true);
+                        break;
+                    }
                 }
             }
-        }
+        }).start();
     }
 
     public MutableLiveData<List<Ciudad>> getCiudades(){
         return ciudades;
     }
 
-    public List<Alojamiento> getAlojamientos(Optional<Alojamiento> tipo, Optional<Integer> capacidad, Optional<Double> minPrecio, Optional<Double> maxPrecio, Optional<Ciudad> ciudad, Optional<Boolean> wifi){
+    public MutableLiveData<List<Alojamiento>> getAlojamientos(){
         return alojamientos;
     }
 
@@ -79,14 +76,32 @@ public class BusquedaViewModel extends AndroidViewModel {
         Favorito nuevoFav = new Favorito(UUID.randomUUID(),UUID.fromString(aloj.getId().toString()),UserRepository.currentUserId());
         favoritos.add(nuevoFav);
         favoritoRepository.guardarFavorito(nuevoFav,voidCallback);
+
+        List<Alojamiento> nuevoAloj = alojamientos.getValue();
+        for(Alojamiento a : nuevoAloj){
+            if(a.getId() == aloj.getId()){
+                a.setFavorito(true);
+                alojamientos.postValue(nuevoAloj);
+                break;
+            }
+        }
     }
 
     public void desmarcarFavorito(Alojamiento aloj){
         for(Favorito f : favoritos){
-            if(aloj.getId().toString() == f.getAlojamientoID().toString()) {
+            if(aloj.getId() == f.getAlojamientoID()) {
                 favoritos.remove(f);
                 favoritoRepository.eliminarFavorito(f,voidCallback);
-                return;
+                break;
+            }
+        }
+
+        List<Alojamiento> nuevoAloj = alojamientos.getValue();
+        for(Alojamiento a : nuevoAloj){
+            if(a.getId() == aloj.getId()){
+                a.setFavorito(false);
+                alojamientos.postValue(nuevoAloj);
+                break;
             }
         }
 
@@ -96,13 +111,11 @@ public class BusquedaViewModel extends AndroidViewModel {
     private OnResult<List<Alojamiento>> alojCallback = new OnResult<List<Alojamiento>>() {
         @Override
         public void onSuccess(List<Alojamiento> result) {
-            alojamientos = result;
+            alojamientos.postValue(result);
         }
 
         @Override
         public void onError(Throwable exception) {
-            Toast toast = Toast.makeText(getApplication(),"Error al buscar alojamientos",Toast.LENGTH_SHORT);
-            toast.show();
             exception.printStackTrace();
         }
     };
@@ -115,8 +128,6 @@ public class BusquedaViewModel extends AndroidViewModel {
 
         @Override
         public void onError(Throwable exception) {
-            Toast toast = Toast.makeText(getApplication(),"Error al buscar favoritos",Toast.LENGTH_SHORT);
-            toast.show();
             exception.printStackTrace();
         }
     };
@@ -129,8 +140,6 @@ public class BusquedaViewModel extends AndroidViewModel {
 
         @Override
         public void onError(Throwable exception) {
-            Toast toast = Toast.makeText(getApplication(),"Error al realizar el cambio",Toast.LENGTH_SHORT);
-            toast.show();
             exception.printStackTrace();
         }
     };

@@ -7,11 +7,13 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.UUID;
+
 @Entity(tableName = "alojamiento")
 public class AlojamientoEntity {
     @PrimaryKey
     @NonNull
-    protected Integer id;
+    protected UUID id;
     protected String titulo;
     protected String descripcion;
     protected Integer capacidad;
@@ -23,7 +25,7 @@ public class AlojamientoEntity {
     public AlojamientoEntity() {
     }
 
-    public AlojamientoEntity(@NonNull Integer id, String titulo, String descripcion, Integer capacidad, Double precioBase, Boolean favorito, Integer imagen) {
+    public AlojamientoEntity(@NonNull UUID id, String titulo, String descripcion, Integer capacidad, Double precioBase, Boolean favorito, Integer imagen) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -34,11 +36,11 @@ public class AlojamientoEntity {
     }
 
     @NonNull
-    public Integer getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(@NonNull Integer id) {
+    public void setId(@NonNull UUID id) {
         this.id = id;
     }
 
