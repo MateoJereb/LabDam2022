@@ -3,10 +3,12 @@ package com.mdgz.dam.labdam2022.repo;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Pair;
 
 import com.mdgz.dam.labdam2022.R;
 import com.mdgz.dam.labdam2022.model.Alojamiento;
 import com.mdgz.dam.labdam2022.model.Departamento;
+import com.mdgz.dam.labdam2022.model.Favorito;
 import com.mdgz.dam.labdam2022.model.Habitacion;
 import com.mdgz.dam.labdam2022.model.Hotel;
 import com.mdgz.dam.labdam2022.model.Ubicacion;
@@ -54,7 +56,7 @@ public class AlojamientoRepository {
         dataSource.recuperarDepartamentos(callback);
     }
 
-    public void recuperarAlojamientos(OnResult<List<Alojamiento>> callback){
+    public void recuperarAlojamientos(OnResult<Pair<List<Alojamiento>,List<Favorito>>> callback){
         dataSource.recuperarAlojamientos(callback);
     }
 }

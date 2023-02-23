@@ -8,6 +8,7 @@ import com.mdgz.dam.labdam2022.persistencia.datasource.FavoritoDataSource;
 import com.mdgz.dam.labdam2022.persistencia.room.implementations.FavoritoRoomDataSource;
 
 import java.util.List;
+import java.util.UUID;
 
 public class FavoritoRepository {
 
@@ -25,7 +26,7 @@ public class FavoritoRepository {
         dataSource.recuperarFavoritos(callback);
     }
 
-    public void eliminarFavorito(Favorito favorito, OnResult<Void> callback){
-        dataSource.eliminarFavorito(favorito,callback);
+    public void eliminarFavorito(UUID favoritoId, OnResult<Void> callback){
+        dataSource.eliminarFavorito(favoritoId,callback);
     }
 }

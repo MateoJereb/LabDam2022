@@ -8,6 +8,7 @@ import androidx.room.Query;
 import com.mdgz.dam.labdam2022.persistencia.room.entity.FavoritoEntity;
 
 import java.util.List;
+import java.util.UUID;
 
 @Dao
 public interface FavoritoDAO {
@@ -17,6 +18,6 @@ public interface FavoritoDAO {
     @Query("SELECT * FROM favorito")
     List<FavoritoEntity> recuperarFavoritos();
 
-    @Delete
-    void eliminarFavorito(FavoritoEntity fav);
+    @Query("DELETE FROM favorito WHERE id = :favId")
+    void eliminarFavorito(UUID favId);
 }

@@ -1,6 +1,7 @@
 package com.mdgz.dam.labdam2022.persistencia.room.implementations;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.mdgz.dam.labdam2022.model.Favorito;
 import com.mdgz.dam.labdam2022.persistencia.OnResult;
@@ -12,6 +13,7 @@ import com.mdgz.dam.labdam2022.persistencia.room.mapper.FavoritoMapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class FavoritoRoomDataSource implements FavoritoDataSource {
     private final FavoritoDAO favoritoDAO;
@@ -53,10 +55,10 @@ public class FavoritoRoomDataSource implements FavoritoDataSource {
     }
 
     @Override
-    public void eliminarFavorito(Favorito favorito, OnResult<Void> callback) {
+    public void eliminarFavorito(UUID favoritoId, OnResult<Void> callback) {
         try{
-            final FavoritoEntity fav = FavoritoMapper.toEntity(favorito);
-            favoritoDAO.eliminarFavorito(fav);
+            favoritoDAO.eliminarFavorito(favoritoId);
+            Log.d("Eliminar",favoritoId.toString());
             callback.onSuccess(null);
         }
         catch (Exception e){

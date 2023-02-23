@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -17,22 +18,26 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.mdgz.dam.labdam2022.R;
 import com.mdgz.dam.labdam2022.databinding.FragmentResultadoBusquedaBinding;
 import com.mdgz.dam.labdam2022.model.Alojamiento;
 import com.mdgz.dam.labdam2022.model.Ciudad;
+import com.mdgz.dam.labdam2022.model.Favorito;
 import com.mdgz.dam.labdam2022.recycler_views.AlojamientosAdapter;
 import com.mdgz.dam.labdam2022.viewmodels.BusquedaViewModel;
+import com.mdgz.dam.labdam2022.viewmodels.BusquedaViewModelFactory;
 import com.mdgz.dam.labdam2022.viewmodels.LogViewModel;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Observable;
-import java.util.Observer;
 import java.util.Optional;
+import java.util.UUID;
 
 public class ResultadoBusquedaFragment extends Fragment {
 
@@ -43,6 +48,7 @@ public class ResultadoBusquedaFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private AlojamientosAdapter recyclerAdapter;
+    private List<Alojamiento> listaAloj;
 
     private Optional<Alojamiento> tipo = Optional.ofNullable(null);
     private Optional<Integer> capacidad = Optional.ofNullable(null);
@@ -68,7 +74,7 @@ public class ResultadoBusquedaFragment extends Fragment {
             if(getArguments().get("wifi") != null) wifi = Optional.of(getArguments().getBoolean("wifi"));
         }
 
-        viewModel = new ViewModelProvider(requireActivity()).get(BusquedaViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity(), new BusquedaViewModelFactory(getContext())).get(BusquedaViewModel.class);
         logViewModel = new ViewModelProvider(requireActivity()).get(LogViewModel.class);
     }
 
@@ -95,14 +101,8 @@ public class ResultadoBusquedaFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
 
-        viewModel.getAlojamientos().observe(requireActivity(), new androidx.lifecycle.Observer<List<Alojamiento>>() {
-            @Override
-            public void onChanged(List<Alojamiento> alojamientos) {
-                registrarBusqueda(alojamientos.size(),0);
-                recyclerAdapter.setListaAlojamientos(alojamientos);
-                recyclerView.setAdapter(recyclerAdapter);
-            }
-        });
+        recyclerAdapter.setListaAlojamientos(new ArrayList<>());
+        recyclerView.setAdapter(recyclerAdapter);
 
         recyclerAdapter.setOnItemClickListener(new AlojamientosAdapter.OnItemClickListener(){
             @Override
@@ -114,6 +114,38 @@ public class ResultadoBusquedaFragment extends Fragment {
         binding.nuevaBusquedaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {onNuevaBusqueda();}
+        });
+
+        viewModel.getCargado().observe(requireActivity(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean value) {
+                if(value){
+                    listaAloj = viewModel.getAlojamientos();
+                    long tiempoBusqueda = viewModel.getTiempo();
+                    registrarBusqueda(listaAloj.size(),tiempoBusqueda);
+
+                    recyclerAdapter.setListaAlojamientos(listaAloj);
+                    recyclerView.setAdapter(recyclerAdapter);
+                    recyclerAdapter.notifyDataSetChanged();
+
+                    Toast.makeText(requireActivity(),"Búsqueda completada en "+tiempoBusqueda+" ms",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        viewModel.getFavPost().observe(requireActivity(), new Observer<LinkedHashMap<UUID, Boolean>>() {
+            @Override
+            public void onChanged(LinkedHashMap<UUID, Boolean> favPost) {
+                for(Alojamiento a : listaAloj){
+                    if(favPost.get(a.getId()) != null){
+                        a.setFavorito(favPost.get(a.getId()));
+                    }
+                }
+
+                recyclerAdapter.setListaAlojamientos(listaAloj);
+                recyclerView.setAdapter(recyclerAdapter);
+                recyclerAdapter.notifyDataSetChanged();
+            }
         });
     }
 

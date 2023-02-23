@@ -41,6 +41,9 @@ public abstract class AppDataBase extends RoomDatabase {
     public static synchronized AppDataBase getInstance(final Context context){
         if(instance == null){
             instance = buildDatabase(context);
+
+            Runnable r = () -> instance.alojamientoDAO().recuperarAlojamientos();
+            instance.getQueryExecutor().execute(r);
         }
 
         return instance;

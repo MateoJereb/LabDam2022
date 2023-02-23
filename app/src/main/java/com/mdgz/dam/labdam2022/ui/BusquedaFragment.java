@@ -20,6 +20,7 @@ import com.mdgz.dam.labdam2022.R;
 import com.mdgz.dam.labdam2022.databinding.FragmentBusquedaBinding;
 import com.mdgz.dam.labdam2022.model.*;
 import com.mdgz.dam.labdam2022.viewmodels.BusquedaViewModel;
+import com.mdgz.dam.labdam2022.viewmodels.BusquedaViewModelFactory;
 
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class BusquedaFragment extends Fragment {
         if (getArguments() != null) {
         }
 
-        busquedaViewModel = new ViewModelProvider(requireActivity()).get(BusquedaViewModel.class);
+        busquedaViewModel = new ViewModelProvider(requireActivity(), new BusquedaViewModelFactory(getContext())).get(BusquedaViewModel.class);
     }
 
     @Override
@@ -61,10 +62,9 @@ public class BusquedaFragment extends Fragment {
         ArrayAdapter<Alojamiento> adapterTipos = new ArrayAdapter<Alojamiento>(this.getActivity(),android.R.layout.simple_spinner_dropdown_item,listaTipos);
         binding.tipoSpinner.setAdapter(adapterTipos);
 
-        busquedaViewModel.getCiudades().observe(getViewLifecycleOwner(), ciudades -> {
-            ArrayAdapter<Ciudad> adapterCiudades = new ArrayAdapter<>(this.getActivity(),android.R.layout.simple_spinner_dropdown_item,ciudades);
-            binding.ciudadSpinner.setAdapter(adapterCiudades);
-        });
+        List<Ciudad> ciudades = busquedaViewModel.getCiudades();
+        ArrayAdapter<Ciudad> adapterCiudades = new ArrayAdapter<>(this.getActivity(),android.R.layout.simple_spinner_dropdown_item,ciudades);
+        binding.ciudadSpinner.setAdapter(adapterCiudades);
 
         binding.tipoSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

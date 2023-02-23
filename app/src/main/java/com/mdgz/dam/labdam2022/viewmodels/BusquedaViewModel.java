@@ -1,11 +1,14 @@
 package com.mdgz.dam.labdam2022.viewmodels;
 
 import android.app.Application;
+import android.util.Log;
+import android.util.Pair;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.mdgz.dam.labdam2022.model.*;
 import com.mdgz.dam.labdam2022.persistencia.OnResult;
@@ -13,122 +16,117 @@ import com.mdgz.dam.labdam2022.persistencia.room.implementations.AlojamientoRoom
 import com.mdgz.dam.labdam2022.repo.*;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-public class BusquedaViewModel extends AndroidViewModel {
-
-    private MutableLiveData<List<Ciudad>> ciudades;
+public class BusquedaViewModel extends ViewModel {
+    private List<Ciudad> ciudades;
     private List<Alojamiento> tiposAlojamiento;
+    private List<Alojamiento> alojamientos = new ArrayList<>();
 
     private final AlojamientoRepository alojRepository;
-    private MutableLiveData<List<Alojamiento>> alojamientos = new MutableLiveData<>(new ArrayList<>());
-
     private final FavoritoRepository favoritoRepository;
-    private List<Favorito> favoritos = new ArrayList<>();
 
-    public BusquedaViewModel(@NonNull Application application) {
-        super(application);
+    private LinkedHashMap<UUID,UUID> mapperAlojFav;
 
-        ciudades = new MutableLiveData<List<Ciudad>>();
-        List<Ciudad> listaCiudades = new ArrayList<>();
-        listaCiudades.add(null);
-        listaCiudades.addAll(CiudadRepository._CIUDADES);
-        ciudades.setValue(listaCiudades);
+    private long tiempoBusqueda = 0;
 
-        tiposAlojamiento = new ArrayList<Alojamiento>();
+    private MutableLiveData<Boolean> cargado = new MutableLiveData<Boolean>(false);
+    private MutableLiveData<LinkedHashMap<UUID,Boolean>> favPost = new MutableLiveData<>(new LinkedHashMap<>());
+
+    public BusquedaViewModel(final AlojamientoRepository alojRepository, final FavoritoRepository favoritoRepository) {
+        ciudades = new ArrayList<>();
+        ciudades.add(null);
+        ciudades.addAll(CiudadRepository._CIUDADES);
+
+        tiposAlojamiento = new ArrayList<>();
         tiposAlojamiento.add(null);
         tiposAlojamiento.add(new Departamento());
         tiposAlojamiento.add(new Habitacion());
 
-        alojRepository = new AlojamientoRepository(application);
-        favoritoRepository = new FavoritoRepository(application);
+        this.alojRepository = alojRepository;
+        this.favoritoRepository = favoritoRepository;
+
+        mapperAlojFav = new LinkedHashMap<>();
 
         new Thread(() -> {
-            alojRepository.recuperarAlojamientos(alojCallback);
-            favoritoRepository.recuperarFavorito(favCallback);
-
-            for(Favorito f : favoritos){
-                for(Alojamiento a : alojamientos.getValue()){
-                    if(a.getId().equals(f.getAlojamientoID())){
-                        a.setFavorito(true);
-                        break;
-                    }
-                }
-            }
+            tiempoBusqueda = System.currentTimeMillis();
+            alojRepository.recuperarAlojamientos(cargadoCallback);
         }).start();
     }
 
-    public MutableLiveData<List<Ciudad>> getCiudades(){
+    public List<Ciudad> getCiudades() {
         return ciudades;
-    }
-
-    public MutableLiveData<List<Alojamiento>> getAlojamientos(){
-        return alojamientos;
     }
 
     public List<Alojamiento> getTiposAlojamiento() {
         return tiposAlojamiento;
     }
 
-    public void marcarFavorito(Alojamiento aloj){
-        Favorito nuevoFav = new Favorito(UUID.randomUUID(),UUID.fromString(aloj.getId().toString()),UserRepository.currentUserId());
-        favoritos.add(nuevoFav);
-        favoritoRepository.guardarFavorito(nuevoFav,voidCallback);
+    public List<Alojamiento> getAlojamientos() {
+        return alojamientos;
+    }
 
-        List<Alojamiento> nuevoAloj = alojamientos.getValue();
-        for(Alojamiento a : nuevoAloj){
-            if(a.getId() == aloj.getId()){
-                a.setFavorito(true);
-                alojamientos.postValue(nuevoAloj);
-                break;
-            }
-        }
+    public long getTiempo() {
+        return tiempoBusqueda;
+    }
+
+    public MutableLiveData<Boolean> getCargado() {
+        return cargado;
+    }
+
+    public MutableLiveData<LinkedHashMap<UUID, Boolean>> getFavPost() {
+        return favPost;
+    }
+
+    public void marcarFavorito(Alojamiento aloj){
+        LinkedHashMap<UUID,Boolean> proxPost = favPost.getValue();
+        proxPost.put(aloj.getId(),true);
+        favPost.postValue(proxPost);
+
+        UUID newId = UUID.randomUUID();
+        Favorito nuevoFav = new Favorito(newId,aloj.getId(),UserRepository.currentUserId());
+        mapperAlojFav.put(aloj.getId(),newId);
+        favoritoRepository.guardarFavorito(nuevoFav,voidCallback);
     }
 
     public void desmarcarFavorito(Alojamiento aloj){
-        for(Favorito f : favoritos){
-            if(aloj.getId() == f.getAlojamientoID()) {
-                favoritos.remove(f);
-                favoritoRepository.eliminarFavorito(f,voidCallback);
-                break;
-            }
-        }
+        LinkedHashMap<UUID,Boolean> proxPost = favPost.getValue();
+        proxPost.put(aloj.getId(),false);
+        favPost.postValue(proxPost);
 
-        List<Alojamiento> nuevoAloj = alojamientos.getValue();
-        for(Alojamiento a : nuevoAloj){
-            if(a.getId() == aloj.getId()){
-                a.setFavorito(false);
-                alojamientos.postValue(nuevoAloj);
-                break;
-            }
-        }
-
+        favoritoRepository.eliminarFavorito(mapperAlojFav.get(aloj.getId()),voidCallback);
+        mapperAlojFav.remove(aloj.getId());
 
     }
 
-    private OnResult<List<Alojamiento>> alojCallback = new OnResult<List<Alojamiento>>() {
+    private OnResult<Pair<List<Alojamiento>,List<Favorito>>> cargadoCallback = new OnResult<Pair<List<Alojamiento>, List<Favorito>>>() {
         @Override
-        public void onSuccess(List<Alojamiento> result) {
-            alojamientos.postValue(result);
+        public void onSuccess(Pair<List<Alojamiento>, List<Favorito>> result) {
+            tiempoBusqueda = System.currentTimeMillis() - tiempoBusqueda;
+
+            alojamientos = result.first;
+
+            for(Favorito f : result.second){
+                mapperAlojFav.put(f.getAlojamientoID(),f.getId());
+
+                for(Alojamiento a : alojamientos){
+                    if(a.getId().equals(f.getAlojamientoID())){
+                        a.setFavorito(true);
+                    }
+                }
+            }
+
+            cargado.postValue(true);
         }
 
         @Override
         public void onError(Throwable exception) {
             exception.printStackTrace();
-        }
-    };
-
-    private OnResult<List<Favorito>> favCallback = new OnResult<List<Favorito>>() {
-        @Override
-        public void onSuccess(List<Favorito> result) {
-            favoritos = result;
-        }
-
-        @Override
-        public void onError(Throwable exception) {
-            exception.printStackTrace();
+            Log.e("ERROR","EXCEPTION AL BUSCAR");
         }
     };
 
@@ -144,3 +142,4 @@ public class BusquedaViewModel extends AndroidViewModel {
         }
     };
 }
+

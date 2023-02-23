@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ import com.mdgz.dam.labdam2022.model.Habitacion;
 import com.mdgz.dam.labdam2022.model.Hotel;
 import com.mdgz.dam.labdam2022.repo.AlojamientoRepository;
 import com.mdgz.dam.labdam2022.viewmodels.BusquedaViewModel;
+import com.mdgz.dam.labdam2022.viewmodels.BusquedaViewModelFactory;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -78,7 +80,7 @@ public class DetalleAlojamientoFragment extends Fragment {
             alojamiento = (Alojamiento) getArguments().getSerializable("alojamiento");
         }
 
-        viewModel = new ViewModelProvider(requireActivity()).get(BusquedaViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity(), new BusquedaViewModelFactory(getContext())).get(BusquedaViewModel.class);
 
         if(savedInstanceState != null){
             yearDesde = savedInstanceState.getInt("yearDesde");
