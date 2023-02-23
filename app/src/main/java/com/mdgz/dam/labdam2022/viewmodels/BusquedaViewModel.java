@@ -100,7 +100,6 @@ public class BusquedaViewModel extends ViewModel {
 
         favoritoRepository.eliminarFavorito(mapperAlojFav.get(aloj.getId()),voidCallback);
         mapperAlojFav.remove(aloj.getId());
-
     }
 
     private OnResult<Pair<List<Alojamiento>,List<Favorito>>> cargadoCallback = new OnResult<Pair<List<Alojamiento>, List<Favorito>>>() {

@@ -15,6 +15,7 @@ import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,6 +112,13 @@ public class ResultadoBusquedaFragment extends Fragment {
             }
         });
 
+        recyclerAdapter.setOnCheckedChangedListener(new AlojamientosAdapter.OnCheckedChangedListener() {
+            @Override
+            public void onCheckedChanged(Alojamiento item, Boolean newValue) {
+                onItemFaved(item,newValue);
+            }
+        });
+
         binding.nuevaBusquedaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {onNuevaBusqueda();}
@@ -128,7 +136,7 @@ public class ResultadoBusquedaFragment extends Fragment {
                     recyclerView.setAdapter(recyclerAdapter);
                     recyclerAdapter.notifyDataSetChanged();
 
-                    Toast.makeText(requireActivity(),"Búsqueda completada en "+tiempoBusqueda+" ms",Toast.LENGTH_SHORT).show();
+                    Log.d("Busqueda completa",""+tiempoBusqueda+" ms");
                 }
             }
         });
@@ -153,6 +161,13 @@ public class ResultadoBusquedaFragment extends Fragment {
         Bundle bundle = new Bundle();
         bundle.putSerializable("alojamiento",aloj);
         navController.navigate(R.id.action_resultadoBusquedaFragment_to_detalleAlojamientoFragment,bundle);
+    }
+
+    private void onItemFaved(Alojamiento aloj, Boolean newValue){
+        new Thread(() -> {
+            if(newValue) viewModel.marcarFavorito(aloj);
+            else viewModel.desmarcarFavorito(aloj);
+        }).start();
     }
 
     private void onNuevaBusqueda(){
