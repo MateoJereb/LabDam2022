@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/busquedaFragment"
-        android:name="com.mdgz.dam.labdam2022.BusquedaFragment"
+        android:name="com.mdgz.dam.labdam2022.ui.BusquedaFragment"
         android:label="utnbnb"
         tools:layout="@layout/fragment_busqueda" >
         <action
@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/resultadoBusquedaFragment"
-        android:name="com.mdgz.dam.labdam2022.ResultadoBusquedaFragment"
+        android:name="com.mdgz.dam.labdam2022.ui.ResultadoBusquedaFragment"
         android:label="Resultados"
         tools:layout="@layout/fragment_resultado_busqueda" >
         <action
@@ -34,7 +34,7 @@
 
     <fragment
         android:id="@+id/detalleAlojamientoFragment"
-        android:name="com.mdgz.dam.labdam2022.DetalleAlojamientoFragment"
+        android:name="com.mdgz.dam.labdam2022.ui.DetalleAlojamientoFragment"
         android:label="Detalle"
         tools:layout="@layout/fragment_detalle_alojamiento" >
         <action
@@ -47,7 +47,7 @@
 
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.mdgz.dam.labdam2022.SettingsFragment"
+        android:name="com.mdgz.dam.labdam2022.ui.SettingsFragment"
         android:label="Configuración"
         >
 
@@ -65,7 +65,7 @@
 
     <fragment
         android:id="@+id/logFragment"
-        android:name="com.mdgz.dam.labdam2022.LogFragment"
+        android:name="com.mdgz.dam.labdam2022.ui.LogFragment"
         android:label="Información de uso"
         tools:layout="@layout/fragment_log">
     </fragment>

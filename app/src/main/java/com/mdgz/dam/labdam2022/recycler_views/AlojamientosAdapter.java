@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mdgz.dam.labdam2022.R;
 import com.mdgz.dam.labdam2022.model.Alojamiento;
+import com.mdgz.dam.labdam2022.ui.ResultadoBusquedaFragment;
+import com.mdgz.dam.labdam2022.viewmodels.BusquedaViewModel;
 
 import java.util.List;
 
@@ -22,6 +25,7 @@ public class AlojamientosAdapter extends RecyclerView.Adapter<AlojamientosAdapte
     private LayoutInflater inflater;
     private Context context;
     private AlojamientosAdapter.OnItemClickListener listener;
+    private AlojamientosAdapter.OnCheckedChangedListener favListener;
 
     public AlojamientosAdapter(List<Alojamiento> lista,Context context){
         listaAlojamientos = lista;
@@ -37,6 +41,10 @@ public class AlojamientosAdapter extends RecyclerView.Adapter<AlojamientosAdapte
         this.listener = listener;
     }
 
+    public void setOnCheckedChangedListener(AlojamientosAdapter.OnCheckedChangedListener favListener){
+        this.favListener = favListener;
+    }
+
     @NonNull
     @Override
     public AlojamientosAdapter.AlojamientosViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -46,7 +54,7 @@ public class AlojamientosAdapter extends RecyclerView.Adapter<AlojamientosAdapte
 
     @Override
     public void onBindViewHolder(@NonNull AlojamientosAdapter.AlojamientosViewHolder holder, int position) {
-        holder.bindData(listaAlojamientos.get(position),listener);
+        holder.bindData(listaAlojamientos.get(position),listener,favListener);
     }
 
     @Override
@@ -58,7 +66,12 @@ public class AlojamientosAdapter extends RecyclerView.Adapter<AlojamientosAdapte
         void onItemClick(Alojamiento item);
     }
 
+    public interface OnCheckedChangedListener{
+        void onCheckedChanged(Alojamiento item, Boolean newValue);
+    }
+
     public static class AlojamientosViewHolder extends RecyclerView.ViewHolder{
+        Alojamiento aloj;
         TextView titulo;
         TextView descripcion;
         CheckBox favorito;
@@ -74,7 +87,11 @@ public class AlojamientosAdapter extends RecyclerView.Adapter<AlojamientosAdapte
             imagen = itemView.findViewById(R.id.imageView);
         }
 
-        void bindData(Alojamiento alojamiento,AlojamientosAdapter.OnItemClickListener listener){
+        public Alojamiento getAloj() {
+            return aloj;
+        }
+
+        void bindData(Alojamiento alojamiento, AlojamientosAdapter.OnItemClickListener listener, AlojamientosAdapter.OnCheckedChangedListener favListener){
             titulo.setText(alojamiento.getTitulo());
             descripcion.setText(alojamiento.getDescripcion());
             favorito.setChecked(alojamiento.getFavorito());
@@ -85,6 +102,14 @@ public class AlojamientosAdapter extends RecyclerView.Adapter<AlojamientosAdapte
                 @Override
                 public void onClick(View v){
                     listener.onItemClick(alojamiento);
+                }
+            });
+            imagen.setImageResource(alojamiento.getImagen());
+
+            favorito.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean newValue) {
+                    favListener.onCheckedChanged(alojamiento,newValue);
                 }
             });
         }

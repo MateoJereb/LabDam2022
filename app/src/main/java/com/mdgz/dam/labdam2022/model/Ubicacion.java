@@ -1,10 +1,12 @@
 package com.mdgz.dam.labdam2022.model;
 
 public class Ubicacion {
-    private double lat;
-    private double lng;
+    private Integer id;
+    private Double lat;
+    private Double lng;
     private String calle;
     private String numero;
+
     private Ciudad ciudad;
 
     public Ubicacion(){
@@ -18,6 +20,10 @@ public class Ubicacion {
         this.numero = numero;
         this.ciudad = ciudad;
     }
+
+    public Integer getId() { return id; }
+
+    public void setId(Integer id) { this.id = id;}
 
     public double getLat() {
         return lat;
