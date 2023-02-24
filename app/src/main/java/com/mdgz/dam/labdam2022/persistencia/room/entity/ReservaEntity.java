@@ -24,6 +24,8 @@ public class ReservaEntity {
 
     private Boolean cancelada;
 
+    private Integer cantidad;
+
     private Double monto;
 
     @ColumnInfo(name = "id_alojamiento")
@@ -35,11 +37,12 @@ public class ReservaEntity {
     public ReservaEntity() {
     }
 
-    public ReservaEntity(@NonNull UUID id, Date fechaIngreso, Date fechaEgreso, Boolean cancelada, Double monto, UUID alojamientoID, UUID usuarioID) {
+    public ReservaEntity(@NonNull UUID id, Date fechaIngreso, Date fechaEgreso, Boolean cancelada, Integer cantidad, Double monto, UUID alojamientoID, UUID usuarioID) {
         this.id = id;
         this.fechaIngreso = fechaIngreso;
         this.fechaEgreso = fechaEgreso;
         this.cancelada = cancelada;
+        this.cantidad = cantidad;
         this.monto = monto;
         this.alojamientoID = alojamientoID;
         this.usuarioID = usuarioID;
@@ -76,6 +79,14 @@ public class ReservaEntity {
 
     public void setCancelada(Boolean cancelada) {
         this.cancelada = cancelada;
+    }
+
+    public Integer getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
     }
 
     public Double getMonto() {

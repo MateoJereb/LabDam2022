@@ -163,7 +163,7 @@
                 android:theme="@style/DefaultEditText"/>
 
             <EditText
-                android:id="@+id/capacidadEditText"
+                android:id="@+id/cantidadEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:theme="@style/DefaultEditText"
@@ -200,6 +200,7 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <Button
+            android:id="@+id/reservarButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"

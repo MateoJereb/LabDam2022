@@ -2,7 +2,9 @@ package com.mdgz.dam.labdam2022.ui;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -31,20 +34,27 @@ import com.mdgz.dam.labdam2022.model.Alojamiento;
 import com.mdgz.dam.labdam2022.model.Departamento;
 import com.mdgz.dam.labdam2022.model.Habitacion;
 import com.mdgz.dam.labdam2022.model.Hotel;
+import com.mdgz.dam.labdam2022.model.Reserva;
 import com.mdgz.dam.labdam2022.repo.AlojamientoRepository;
+import com.mdgz.dam.labdam2022.repo.UserRepository;
 import com.mdgz.dam.labdam2022.viewmodels.BusquedaViewModel;
 import com.mdgz.dam.labdam2022.viewmodels.BusquedaViewModelFactory;
+import com.mdgz.dam.labdam2022.viewmodels.ReservaViewModel;
+import com.mdgz.dam.labdam2022.viewmodels.ReservaViewModelFactory;
 
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.UUID;
 
 public class DetalleAlojamientoFragment extends Fragment {
 
     private FragmentDetalleAlojamientoBinding binding;
     private NavController navController;
     private BusquedaViewModel viewModel;
+    private ReservaViewModel reservaViewModel;
 
     private Alojamiento alojamiento;
 
@@ -56,6 +66,11 @@ public class DetalleAlojamientoFragment extends Fragment {
     private int dayHasta;
 
     private Double costo;
+
+    private Boolean desdeSelected;
+    private Boolean hastaSelected;
+
+    private Boolean showingLastDialog;
 
     public DetalleAlojamientoFragment() {
         // Required empty public constructor
@@ -71,6 +86,9 @@ public class DetalleAlojamientoFragment extends Fragment {
         outState.putInt("monthHasta",monthHasta);
         outState.putInt("dayHasta",dayHasta);
         outState.putDouble("costo",costo);
+        outState.putBoolean("desdeSelected",desdeSelected);
+        outState.putBoolean("hastaSelected",hastaSelected);
+        outState.putBoolean("showingLastDialog",showingLastDialog);
     }
 
     @Override
@@ -81,6 +99,7 @@ public class DetalleAlojamientoFragment extends Fragment {
         }
 
         viewModel = new ViewModelProvider(requireActivity(), new BusquedaViewModelFactory(getContext())).get(BusquedaViewModel.class);
+        reservaViewModel = new ViewModelProvider(requireActivity(), new ReservaViewModelFactory(getContext())).get(ReservaViewModel.class);
 
         if(savedInstanceState != null){
             yearDesde = savedInstanceState.getInt("yearDesde");
@@ -90,6 +109,12 @@ public class DetalleAlojamientoFragment extends Fragment {
             monthHasta = savedInstanceState.getInt("monthHasta");
             dayHasta = savedInstanceState.getInt("dayHasta");
             costo = savedInstanceState.getDouble("costo");
+            desdeSelected = savedInstanceState.getBoolean("desdeSelected");
+            hastaSelected = savedInstanceState.getBoolean("hastaSelected");
+            showingLastDialog = savedInstanceState.getBoolean("showingLastDialog");
+
+            if(showingLastDialog)
+                finalizarReserva();
         }
         else{
             Calendar calendar = Calendar.getInstance();
@@ -100,6 +125,9 @@ public class DetalleAlojamientoFragment extends Fragment {
             monthHasta = calendar.get(Calendar.MONTH);
             dayHasta = calendar.get(Calendar.DAY_OF_MONTH);
             costo = 0.0;
+            desdeSelected = false;
+            hastaSelected = false;
+            showingLastDialog = false;
         }
     }
 
@@ -176,6 +204,7 @@ public class DetalleAlojamientoFragment extends Fragment {
                         dayDesde = day;
 
                         actualizarCosto();
+                        desdeSelected = true;
                     }
                 }, yearDesde, monthDesde, dayDesde);
 
@@ -199,6 +228,7 @@ public class DetalleAlojamientoFragment extends Fragment {
                         dayHasta = day;
 
                         actualizarCosto();
+                        hastaSelected = true;
                     }
                 }, yearHasta, monthHasta, dayHasta);
 
@@ -217,12 +247,17 @@ public class DetalleAlojamientoFragment extends Fragment {
             }
         });
 
+        binding.reservarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { onReservar(); }
+        });
+
     }
 
     private void actualizarCosto(){
         if(binding.desdeDatePicker.getText().length() > 0 && binding.hastaDatePicker.getText().length() > 0){
             LocalDate  fechaDesde = LocalDate.of(yearDesde,monthDesde,dayDesde),
-                    fechaHasta = LocalDate.of(yearHasta,monthHasta,dayHasta);
+                       fechaHasta = LocalDate.of(yearHasta,monthHasta,dayHasta);
 
             if(fechaDesde.isAfter(fechaHasta)) costo = 0.0;
             else {
@@ -237,5 +272,97 @@ public class DetalleAlojamientoFragment extends Fragment {
         }
 
         binding.precioTextView.setText("$"+String.format("%.2f",costo));
+    }
+
+    private void onReservar(){
+       if(camposCompletos()){
+           if(fechasValidas()){
+               if(cantidadValida()){
+                   Reserva res = new Reserva(  UUID.randomUUID(),
+                           new GregorianCalendar(yearDesde,monthDesde-1,dayDesde).getTime(),
+                           new GregorianCalendar(yearHasta,monthHasta-1,dayHasta).getTime(),
+                           false,
+                           Integer.parseInt(binding.cantidadEditText.getText().toString()),
+                           costo,
+                           alojamiento.getId(),
+                           UserRepository.currentUserId());
+
+                   reservaViewModel.getReservaRealizada().observe(requireActivity(), new Observer<Boolean>() {
+                       @Override
+                       public void onChanged(Boolean reservaRealizada) {
+                           if(reservaRealizada)
+                               finalizarReserva();
+                       }
+                   });
+
+                   new Thread(() -> {
+                       reservaViewModel.reservar(res);
+                   }).start();
+               }
+               else{
+                   String msje = " tiene capacidad para 1 a "+alojamiento.getCapacidad()+" personas";
+                   if(alojamiento.getClass() == Departamento.class) msje = "El departamento" + msje;
+                   else msje = "La habitación" + msje;
+
+                   error(msje);
+               }
+           }
+           else{ error("Ingrese un rango de fechas valido"); }
+       }
+       else{ error("Complete todos los campos para realizar la reserva"); }
+    }
+
+    private Boolean camposCompletos(){
+        if(!desdeSelected || !hastaSelected)
+            return false;
+
+        if(binding.cantidadEditText.getText().toString().length() == 0)
+            return false;
+
+        return true;
+    }
+
+    private Boolean fechasValidas(){
+        LocalDate  fechaDesde = LocalDate.of(yearDesde,monthDesde,dayDesde),
+                fechaHasta = LocalDate.of(yearHasta,monthHasta,dayHasta);
+
+        if(fechaDesde.isAfter(fechaHasta))
+            return false;
+
+        return true;
+    }
+
+    private Boolean cantidadValida(){
+        Integer cant = Integer.parseInt(binding.cantidadEditText.getText().toString());
+        if(cant < 1 || cant > alojamiento.getCapacidad())
+            return false;
+
+        return true;
+    }
+
+    private void error(String mensaje){
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+        builder.setTitle("Error!")
+                .setMessage(mensaje)
+                .setPositiveButton("Aceptar",null);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void finalizarReserva(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+        builder.setMessage("La reserva de "+alojamiento.getTitulo()+" fue realizada con éxito")
+                .setCancelable(false)
+                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        navController.navigateUp();
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        showingLastDialog = true;
     }
 }

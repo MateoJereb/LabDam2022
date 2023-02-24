@@ -61,8 +61,6 @@ public abstract class AppDataBase extends RoomDatabase {
                         getInstance(context).alojamientoDAO().guardarAlojamientos(AlojamientoMapper.toEntities(alojamientos));
                         getInstance(context).alojamientoDAO().guardarDepartamentos(DepartamentoMapper.toEntities(dptos));
                         getInstance(context).alojamientoDAO().guardarHabitaciones(HabitacionMapper.toEntities(habs));
-
-                        getInstance(context).alojamientoDAO().recuperarAlojamientos();
                     }
                 });
             }

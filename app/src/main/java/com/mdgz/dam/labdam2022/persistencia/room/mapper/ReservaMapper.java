@@ -16,6 +16,7 @@ public class ReservaMapper {
                 res.getFechaIngreso(),
                 res.getFechaEgreso(),
                 res.getCancelada(),
+                res.getCantidad(),
                 res.getMonto(),
                 res.getAlojamientoID(),
                 res.getUsuarioID()
@@ -28,6 +29,7 @@ public class ReservaMapper {
                 res.getFechaIngreso(),
                 res.getFechaEgreso(),
                 res.getCancelada(),
+                res.getCantidad(),
                 res.getMonto(),
                 res.getAlojamientoID(),
                 res.getUsuarioID()

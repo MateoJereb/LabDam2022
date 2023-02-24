@@ -102,7 +102,8 @@ public class ResultadoBusquedaFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
 
-        recyclerAdapter.setListaAlojamientos(new ArrayList<>());
+        listaAloj = new ArrayList<>();
+        recyclerAdapter.setListaAlojamientos(listaAloj);
         recyclerView.setAdapter(recyclerAdapter);
 
         recyclerAdapter.setOnItemClickListener(new AlojamientosAdapter.OnItemClickListener(){
