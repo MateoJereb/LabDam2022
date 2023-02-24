@@ -1,10 +1,11 @@
 package com.mdgz.dam.labdam2022.model;
 
 public class Hotel {
-    Integer id;
-    String nombre;
-    Integer categoria;
-    Ubicacion ubicacion;
+    private Integer id;
+    private String nombre;
+    private Integer categoria;
+
+    private Ubicacion ubicacion;
 
     public Hotel(){
         super();

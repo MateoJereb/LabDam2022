@@ -1,25 +1,43 @@
-package com.mdgz.dam.labdam2022.model;
+package com.mdgz.dam.labdam2022.persistencia.room.entity;
 
-import java.time.Instant;
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.PrimaryKey;
+
 import java.util.Date;
 import java.util.UUID;
 
-public class Reserva {
-
+@Entity(tableName = "reserva",
+        foreignKeys = {@ForeignKey(entity = AlojamientoEntity.class,parentColumns = "id",childColumns = "id_alojamiento",onUpdate = ForeignKey.CASCADE,onDelete = ForeignKey.CASCADE)})
+public class ReservaEntity {
+    @PrimaryKey
+    @NonNull
     private UUID id;
+
+    @ColumnInfo(name = "fecha_ingreso")
     private Date fechaIngreso;
+
+    @ColumnInfo(name = "fecha_egreso")
     private Date fechaEgreso;
+
     private Boolean cancelada;
+
     private Integer cantidad;
+
     private Double monto;
 
+    @ColumnInfo(name = "id_alojamiento")
     private UUID alojamientoID;
+
+    @ColumnInfo(name = "id_usuario")
     private UUID usuarioID;
 
-    public Reserva() {
+    public ReservaEntity() {
     }
 
-    public Reserva(UUID id, Date fechaIngreso, Date fechaEgreso, Boolean cancelada, Integer cantidad, Double monto, UUID alojamientoID, UUID usuarioID) {
+    public ReservaEntity(@NonNull UUID id, Date fechaIngreso, Date fechaEgreso, Boolean cancelada, Integer cantidad, Double monto, UUID alojamientoID, UUID usuarioID) {
         this.id = id;
         this.fechaIngreso = fechaIngreso;
         this.fechaEgreso = fechaEgreso;
@@ -30,11 +48,12 @@ public class Reserva {
         this.usuarioID = usuarioID;
     }
 
+    @NonNull
     public UUID getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(@NonNull UUID id) {
         this.id = id;
     }
 
@@ -94,5 +113,3 @@ public class Reserva {
         this.usuarioID = usuarioID;
     }
 }
-
-

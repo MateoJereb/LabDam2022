@@ -1,6 +1,5 @@
-package com.mdgz.dam.labdam2022;
+package com.mdgz.dam.labdam2022.ui;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,26 +9,19 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.preference.PreferenceManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 
+import com.mdgz.dam.labdam2022.R;
 import com.mdgz.dam.labdam2022.databinding.FragmentBusquedaBinding;
 import com.mdgz.dam.labdam2022.model.*;
-import com.mdgz.dam.labdam2022.repo.CiudadRepository;
 import com.mdgz.dam.labdam2022.viewmodels.BusquedaViewModel;
-import com.mdgz.dam.labdam2022.viewmodels.LogViewModel;
+import com.mdgz.dam.labdam2022.viewmodels.BusquedaViewModelFactory;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 public class BusquedaFragment extends Fragment {
@@ -48,7 +40,7 @@ public class BusquedaFragment extends Fragment {
         if (getArguments() != null) {
         }
 
-        busquedaViewModel = new ViewModelProvider(requireActivity()).get(BusquedaViewModel.class);
+        busquedaViewModel = new ViewModelProvider(requireActivity(), new BusquedaViewModelFactory(getContext())).get(BusquedaViewModel.class);
     }
 
     @Override
@@ -70,10 +62,9 @@ public class BusquedaFragment extends Fragment {
         ArrayAdapter<Alojamiento> adapterTipos = new ArrayAdapter<Alojamiento>(this.getActivity(),android.R.layout.simple_spinner_dropdown_item,listaTipos);
         binding.tipoSpinner.setAdapter(adapterTipos);
 
-        busquedaViewModel.getCiudades().observe(getViewLifecycleOwner(), ciudades -> {
-            ArrayAdapter<Ciudad> adapterCiudades = new ArrayAdapter<>(this.getActivity(),android.R.layout.simple_spinner_dropdown_item,ciudades);
-            binding.ciudadSpinner.setAdapter(adapterCiudades);
-        });
+        List<Ciudad> ciudades = busquedaViewModel.getCiudades();
+        ArrayAdapter<Ciudad> adapterCiudades = new ArrayAdapter<>(this.getActivity(),android.R.layout.simple_spinner_dropdown_item,ciudades);
+        binding.ciudadSpinner.setAdapter(adapterCiudades);
 
         binding.tipoSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

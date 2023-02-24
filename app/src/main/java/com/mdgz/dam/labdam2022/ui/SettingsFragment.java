@@ -1,13 +1,9 @@
-package com.mdgz.dam.labdam2022;
+package com.mdgz.dam.labdam2022.ui;
 
-import android.opengl.Visibility;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,6 +17,7 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreferenceCompat;
 
+import com.mdgz.dam.labdam2022.R;
 import com.mdgz.dam.labdam2022.viewmodels.LogViewModel;
 
 public class SettingsFragment extends PreferenceFragmentCompat {

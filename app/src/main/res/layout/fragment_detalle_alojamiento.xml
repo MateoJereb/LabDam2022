@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".DetalleAlojamientoFragment"
+    tools:context=".ui.DetalleAlojamientoFragment"
     android:orientation="vertical">
 
     <android.support.constraint.ConstraintLayout
@@ -163,7 +163,7 @@
                 android:theme="@style/DefaultEditText"/>
 
             <EditText
-                android:id="@+id/capacidadEditText"
+                android:id="@+id/cantidadEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:theme="@style/DefaultEditText"
@@ -200,6 +200,7 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <Button
+            android:id="@+id/reservarButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
