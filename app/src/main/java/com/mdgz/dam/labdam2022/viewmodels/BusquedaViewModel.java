@@ -1,25 +1,18 @@
 package com.mdgz.dam.labdam2022.viewmodels;
 
-import android.app.Application;
 import android.util.Log;
 import android.util.Pair;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.mdgz.dam.labdam2022.model.*;
 import com.mdgz.dam.labdam2022.persistencia.OnResult;
-import com.mdgz.dam.labdam2022.persistencia.room.implementations.AlojamientoRoomDataSource;
 import com.mdgz.dam.labdam2022.repo.*;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
 
 public class BusquedaViewModel extends ViewModel {

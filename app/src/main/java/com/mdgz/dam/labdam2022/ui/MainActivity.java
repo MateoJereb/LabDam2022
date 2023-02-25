@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.Toast;
 import android.window.SplashScreen;
 
 import com.mdgz.dam.labdam2022.R;
@@ -80,6 +81,14 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.action_buscar:
                 while(navController.navigateUp()){ }
+                break;
+
+            case R.id.action_reservas:
+                Toast.makeText(this,"Funcionalidad en desarrollo",Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.action_favoritos:
+                Toast.makeText(this,"Funcionalidad en desarrollo",Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.action_config:

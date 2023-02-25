@@ -1,4 +1,4 @@
-package com.mdgz.dam.labdam2022.persistencia.room.implementations;
+package com.mdgz.dam.labdam2022.persistencia.room.implementation;
 
 import android.content.Context;
 import android.util.Log;

@@ -1,4 +1,4 @@
-package com.mdgz.dam.labdam2022.persistencia.room.implementations;
+package com.mdgz.dam.labdam2022.persistencia.room.implementation;
 
 import android.content.Context;
 import android.util.Pair;
@@ -12,7 +12,6 @@ import com.mdgz.dam.labdam2022.persistencia.datasource.AlojamientoDataSource;
 import com.mdgz.dam.labdam2022.persistencia.room.AppDataBase;
 import com.mdgz.dam.labdam2022.persistencia.room.dao.AlojamientoDAO;
 import com.mdgz.dam.labdam2022.persistencia.room.dao.FavoritoDAO;
-import com.mdgz.dam.labdam2022.persistencia.room.dao.ReservaDAO;
 import com.mdgz.dam.labdam2022.persistencia.room.entity.AlojamientoEntity;
 import com.mdgz.dam.labdam2022.persistencia.room.entity.DepartamentoEntity;
 import com.mdgz.dam.labdam2022.persistencia.room.entity.FavoritoEntity;
@@ -23,9 +22,7 @@ import com.mdgz.dam.labdam2022.persistencia.room.mapper.FavoritoMapper;
 import com.mdgz.dam.labdam2022.persistencia.room.mapper.HabitacionMapper;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 

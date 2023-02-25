@@ -5,7 +5,7 @@ import android.content.Context;
 import com.mdgz.dam.labdam2022.model.Reserva;
 import com.mdgz.dam.labdam2022.persistencia.OnResult;
 import com.mdgz.dam.labdam2022.persistencia.datasource.ReservaDataSource;
-import com.mdgz.dam.labdam2022.persistencia.room.implementations.ReservaRoomDataSource;
+import com.mdgz.dam.labdam2022.persistencia.room.implementation.ReservaRoomDataSource;
 
 import java.util.List;
 

@@ -5,7 +5,7 @@ import android.content.Context;
 import com.mdgz.dam.labdam2022.model.Favorito;
 import com.mdgz.dam.labdam2022.persistencia.OnResult;
 import com.mdgz.dam.labdam2022.persistencia.datasource.FavoritoDataSource;
-import com.mdgz.dam.labdam2022.persistencia.room.implementations.FavoritoRoomDataSource;
+import com.mdgz.dam.labdam2022.persistencia.room.implementation.FavoritoRoomDataSource;
 
 import java.util.List;
 import java.util.UUID;
