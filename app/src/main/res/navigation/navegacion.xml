@@ -43,6 +43,9 @@
         <action
             android:id="@+id/action_detalleAlojamientoFragment_to_resultadoBusquedaFragment"
             app:destination="@id/resultadoBusquedaFragment" />
+        <action
+            android:id="@+id/action_refresh_detalleAlojamientoFragment"
+            app:destination="@id/detalleAlojamientoFragment"/>
     </fragment>
 
     <fragment

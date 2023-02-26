@@ -1,8 +1,6 @@
 package com.mdgz.dam.labdam2022.repo;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.Pair;
 
 import com.mdgz.dam.labdam2022.R;
@@ -14,7 +12,7 @@ import com.mdgz.dam.labdam2022.model.Hotel;
 import com.mdgz.dam.labdam2022.model.Ubicacion;
 import com.mdgz.dam.labdam2022.persistencia.OnResult;
 import com.mdgz.dam.labdam2022.persistencia.datasource.AlojamientoDataSource;
-import com.mdgz.dam.labdam2022.persistencia.room.implementations.AlojamientoRoomDataSource;
+import com.mdgz.dam.labdam2022.persistencia.room.implementation.AlojamientoRoomDataSource;
 
 import java.util.List;
 import java.util.UUID;
@@ -56,7 +54,7 @@ public class AlojamientoRepository {
         dataSource.recuperarDepartamentos(callback);
     }
 
-    public void recuperarAlojamientos(OnResult<Pair<List<Alojamiento>,List<Favorito>>> callback){
+    public void recuperarAlojamientos(OnResult<List<Alojamiento>> callback){
         dataSource.recuperarAlojamientos(callback);
     }
 }

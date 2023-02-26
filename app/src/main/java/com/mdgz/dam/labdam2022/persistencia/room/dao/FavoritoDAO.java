@@ -18,6 +18,6 @@ public interface FavoritoDAO {
     @Query("SELECT * FROM favorito")
     List<FavoritoEntity> recuperarFavoritos();
 
-    @Query("DELETE FROM favorito WHERE id = :favId")
+    @Query("DELETE FROM favorito WHERE id_alojamiento = :favId")
     void eliminarFavorito(UUID favId);
 }

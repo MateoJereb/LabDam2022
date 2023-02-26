@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.Toast;
 import android.window.SplashScreen;
 
 import com.mdgz.dam.labdam2022.R;
@@ -29,6 +30,7 @@ import com.mdgz.dam.labdam2022.model.Alojamiento;
 import com.mdgz.dam.labdam2022.model.Departamento;
 import com.mdgz.dam.labdam2022.model.Favorito;
 import com.mdgz.dam.labdam2022.persistencia.OnResult;
+import com.mdgz.dam.labdam2022.persistencia.retrofit.AppRetrofit;
 import com.mdgz.dam.labdam2022.persistencia.room.AppDataBase;
 import com.mdgz.dam.labdam2022.repo.AlojamientoRepository;
 import com.mdgz.dam.labdam2022.viewmodels.BusquedaViewModel;
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         AppDataBase.getInstance(getApplicationContext());
+        AppRetrofit.getInstance();
 
         busquedaViewModel = new ViewModelProvider(this, new BusquedaViewModelFactory(this)).get(BusquedaViewModel.class);
         reservaViewModel = new ViewModelProvider(this, new ReservaViewModelFactory(this)).get(ReservaViewModel.class);
@@ -80,6 +83,14 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.action_buscar:
                 while(navController.navigateUp()){ }
+                break;
+
+            case R.id.action_reservas:
+                Toast.makeText(this,"Funcionalidad en desarrollo",Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.action_favoritos:
+                Toast.makeText(this,"Funcionalidad en desarrollo",Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.action_config:
