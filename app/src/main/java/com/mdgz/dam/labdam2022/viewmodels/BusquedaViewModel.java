@@ -1,25 +1,18 @@
 package com.mdgz.dam.labdam2022.viewmodels;
 
-import android.app.Application;
 import android.util.Log;
 import android.util.Pair;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.mdgz.dam.labdam2022.model.*;
 import com.mdgz.dam.labdam2022.persistencia.OnResult;
-import com.mdgz.dam.labdam2022.persistencia.room.implementations.AlojamientoRoomDataSource;
 import com.mdgz.dam.labdam2022.repo.*;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
 
 public class BusquedaViewModel extends ViewModel {
@@ -30,7 +23,7 @@ public class BusquedaViewModel extends ViewModel {
     private final AlojamientoRepository alojRepository;
     private final FavoritoRepository favoritoRepository;
 
-    private LinkedHashMap<UUID,UUID> mapperAlojFav;
+    //private LinkedHashMap<UUID,UUID> mapperAlojFav;
 
     private long tiempoBusqueda = 0;
 
@@ -50,11 +43,12 @@ public class BusquedaViewModel extends ViewModel {
         this.alojRepository = alojRepository;
         this.favoritoRepository = favoritoRepository;
 
-        mapperAlojFav = new LinkedHashMap<>();
+        //mapperAlojFav = new LinkedHashMap<>();
 
         new Thread(() -> {
             tiempoBusqueda = System.currentTimeMillis();
-            alojRepository.recuperarAlojamientos(cargadoCallback);
+            Log.d("Buscar","Alojamiento");
+            alojRepository.recuperarAlojamientos(alojamientosCargadosCallback);
         }).start();
     }
 
@@ -89,7 +83,7 @@ public class BusquedaViewModel extends ViewModel {
 
         UUID newId = UUID.randomUUID();
         Favorito nuevoFav = new Favorito(newId,aloj.getId(),UserRepository.currentUserId());
-        mapperAlojFav.put(aloj.getId(),newId);
+        //mapperAlojFav.put(aloj.getId(),newId);
         favoritoRepository.guardarFavorito(nuevoFav,voidCallback);
     }
 
@@ -98,22 +92,32 @@ public class BusquedaViewModel extends ViewModel {
         proxPost.put(aloj.getId(),false);
         favPost.postValue(proxPost);
 
-        favoritoRepository.eliminarFavorito(mapperAlojFav.get(aloj.getId()),voidCallback);
-        mapperAlojFav.remove(aloj.getId());
+        favoritoRepository.eliminarFavorito(aloj.getId(),voidCallback);
     }
 
-    private OnResult<Pair<List<Alojamiento>,List<Favorito>>> cargadoCallback = new OnResult<Pair<List<Alojamiento>, List<Favorito>>>() {
+    private OnResult<List<Alojamiento>> alojamientosCargadosCallback = new OnResult<List<Alojamiento>>() {
         @Override
-        public void onSuccess(Pair<List<Alojamiento>, List<Favorito>> result) {
+        public void onSuccess(List<Alojamiento> result) {
+            alojamientos = result;
+            Log.d("Alojamiento","Encontrado");
+            favoritoRepository.recuperarFavorito(favoritosCargadosCallback);
+        }
+
+        @Override
+        public void onError(Throwable exception) {
+            exception.printStackTrace();
+            Log.e("ERROR","EXCEPTION AL BUSCAR");
+        }
+    };
+
+    private OnResult<List<Favorito>> favoritosCargadosCallback = new OnResult<List<Favorito>>() {
+        @Override
+        public void onSuccess(List<Favorito> result) {
+            Log.d("Favorito","Encontrado");
             tiempoBusqueda = System.currentTimeMillis() - tiempoBusqueda;
-
-            alojamientos = result.first;
-
-            for(Favorito f : result.second){
-                mapperAlojFav.put(f.getAlojamientoID(),f.getId());
-
-                for(Alojamiento a : alojamientos){
-                    if(a.getId().equals(f.getAlojamientoID())){
+            for(Favorito f : result){
+                for(Alojamiento a : alojamientos) {
+                    if (a.getId().equals(f.getAlojamientoID())) {
                         a.setFavorito(true);
                     }
                 }

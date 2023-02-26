@@ -11,5 +11,5 @@ public interface FavoritoDataSource {
 
     void recuperarFavoritos(OnResult<List<Favorito>> callback);
 
-    void eliminarFavorito(UUID favoritoId, OnResult<Void> callback);
+    void eliminarFavorito(UUID alojamientoID, OnResult<Void> callback);
 }
