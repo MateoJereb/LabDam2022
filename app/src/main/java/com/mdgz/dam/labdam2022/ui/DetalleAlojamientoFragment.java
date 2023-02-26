@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -195,12 +196,11 @@ public class DetalleAlojamientoFragment extends Fragment {
                 DatePickerDialog dialog = new DatePickerDialog(requireActivity(),new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                        month++;
-                        String fecha = day+"/"+month+"/"+year;
+                        String fecha = day+"/"+(month+1)+"/"+year;
                         binding.desdeDatePicker.setText(fecha);
 
                         yearDesde = year;
-                        monthDesde = month-1;
+                        monthDesde = month;
                         dayDesde = day;
 
                         actualizarCosto();
@@ -219,12 +219,11 @@ public class DetalleAlojamientoFragment extends Fragment {
                 DatePickerDialog dialog = new DatePickerDialog(requireActivity(),new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                        month++;
-                        String fecha = day+"/"+month+"/"+year;
+                        String fecha = day+"/"+(month+1)+"/"+year;
                         binding.hastaDatePicker.setText(fecha);
 
                         yearHasta = year;
-                        monthHasta = month-1;
+                        monthHasta = month;
                         dayHasta = day;
 
                         actualizarCosto();
@@ -252,12 +251,20 @@ public class DetalleAlojamientoFragment extends Fragment {
             public void onClick(View view) { onReservar(); }
         });
 
+        reservaViewModel.getReservaRealizada().observe(requireActivity(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean reservaRealizada) {
+                if(reservaRealizada)
+                    finalizarReserva();
+            }
+        });
+
     }
 
     private void actualizarCosto(){
         if(binding.desdeDatePicker.getText().length() > 0 && binding.hastaDatePicker.getText().length() > 0){
-            LocalDate  fechaDesde = LocalDate.of(yearDesde,monthDesde,dayDesde),
-                       fechaHasta = LocalDate.of(yearHasta,monthHasta,dayHasta);
+            LocalDate  fechaDesde = LocalDate.of(yearDesde,monthDesde+1,dayDesde),
+                       fechaHasta = LocalDate.of(yearHasta,monthHasta+1,dayHasta);
 
             if(fechaDesde.isAfter(fechaHasta)) costo = 0.0;
             else {
@@ -279,21 +286,13 @@ public class DetalleAlojamientoFragment extends Fragment {
            if(fechasValidas()){
                if(cantidadValida()){
                    Reserva res = new Reserva(  UUID.randomUUID(),
-                           new GregorianCalendar(yearDesde,monthDesde-1,dayDesde).getTime(),
-                           new GregorianCalendar(yearHasta,monthHasta-1,dayHasta).getTime(),
+                           new GregorianCalendar(yearDesde,monthDesde,dayDesde).getTime(),
+                           new GregorianCalendar(yearHasta,monthHasta,dayHasta).getTime(),
                            false,
                            Integer.parseInt(binding.cantidadEditText.getText().toString()),
                            costo,
                            alojamiento.getId(),
                            UserRepository.currentUserId());
-
-                   reservaViewModel.getReservaRealizada().observe(requireActivity(), new Observer<Boolean>() {
-                       @Override
-                       public void onChanged(Boolean reservaRealizada) {
-                           if(reservaRealizada)
-                               finalizarReserva();
-                       }
-                   });
 
                    new Thread(() -> {
                        reservaViewModel.reservar(res);
@@ -323,8 +322,8 @@ public class DetalleAlojamientoFragment extends Fragment {
     }
 
     private Boolean fechasValidas(){
-        LocalDate  fechaDesde = LocalDate.of(yearDesde,monthDesde,dayDesde),
-                fechaHasta = LocalDate.of(yearHasta,monthHasta,dayHasta);
+        LocalDate  fechaDesde = LocalDate.of(yearDesde,monthDesde+1,dayDesde),
+                fechaHasta = LocalDate.of(yearHasta,monthHasta+1,dayHasta);
 
         if(fechaDesde.isAfter(fechaHasta))
             return false;
@@ -357,7 +356,9 @@ public class DetalleAlojamientoFragment extends Fragment {
                 .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        navController.navigateUp();
+                        reservaViewModel.getReservaRealizada().removeObservers(requireActivity());
+                        reservaViewModel.reservaTerminada();
+                        while(navController.navigateUp()){}
                     }
                 });
 

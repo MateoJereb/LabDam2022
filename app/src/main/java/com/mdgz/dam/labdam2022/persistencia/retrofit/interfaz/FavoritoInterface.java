@@ -5,6 +5,7 @@ import com.mdgz.dam.labdam2022.persistencia.retrofit.entity.FavoritoRetrofit;
 import java.util.List;
 import java.util.UUID;
 
+import okhttp3.ResponseBody;
 import retrofit2.Response;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -21,9 +22,9 @@ public interface FavoritoInterface {
 
     @Headers("Authorization: Basic amVyZWI6cGFzcw==")
     @POST("favorito")
-    Call<Response> guardarFavorito(@Body FavoritoRetrofit fav);
+    Call<FavoritoRetrofit> guardarFavorito(@Body FavoritoRetrofit fav);
 
     @Headers("Authorization: Basic amVyZWI6cGFzcw==")
     @DELETE("favorito")
-    Call<Response> eliminarFavorito(@Query("alojamientoID") UUID alojamientoID);
+    Call<ResponseBody> eliminarFavorito(@Query("alojamientoId") UUID alojamientoID);
 }

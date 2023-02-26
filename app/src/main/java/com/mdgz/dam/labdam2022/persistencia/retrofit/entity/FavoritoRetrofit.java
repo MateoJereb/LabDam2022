@@ -5,27 +5,15 @@ import com.google.gson.annotations.SerializedName;
 import java.util.UUID;
 
 public class FavoritoRetrofit {
-    @SerializedName("id")
-    private UUID id;
-
-    @SerializedName("alojamientoID")
+    @SerializedName("alojamientoId")
     private UUID alojamientoID;
 
-    @SerializedName("usuarioID")
+    @SerializedName("usuarioId")
     private UUID usuarioID;
 
-    public FavoritoRetrofit(UUID id, UUID alojamientoID, UUID usuarioID) {
-        this.id = id;
+    public FavoritoRetrofit(UUID alojamientoID, UUID usuarioID) {
         this.alojamientoID = alojamientoID;
         this.usuarioID = usuarioID;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     public UUID getAlojamientoID() {

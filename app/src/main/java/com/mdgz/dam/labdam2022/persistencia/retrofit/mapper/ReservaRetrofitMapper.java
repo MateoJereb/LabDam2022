@@ -12,12 +12,8 @@ public class ReservaRetrofitMapper {
 
     public static ReservaRetrofit toEntity(Reserva res){
         return new ReservaRetrofit(
-                res.getId(),
                 res.getFechaIngreso(),
                 res.getFechaEgreso(),
-                res.getCancelada(),
-                res.getCantidad(),
-                res.getMonto(),
                 res.getAlojamientoID(),
                 res.getUsuarioID()
         );
@@ -25,22 +21,22 @@ public class ReservaRetrofitMapper {
 
     public static Reserva fromEntity(ReservaRetrofit res){
         return new Reserva(
-                res.getId(),
+                null,
                 res.getFechaIngreso(),
-                res.getFechaEgreso(),
-                res.getCancelada(),
-                res.getCantidad(),
-                res.getMonto(),
+                res.getFechaSalida(),
+                false,
+                1,
+                0.0,
                 res.getAlojamientoID(),
                 res.getUsuarioID()
         );
     }
 
-    public List<ReservaRetrofit> toEntities(List<Reserva> l){
+    public static List<ReservaRetrofit> toEntities(List<Reserva> l){
         return l.stream().map(r -> toEntity(r)).collect(Collectors.toList());
     }
 
-    public List<Reserva> fromEntities(List<ReservaRetrofit> l){
+    public static List<Reserva> fromEntities(List<ReservaRetrofit> l){
         return l.stream().map(r -> fromEntity(r)).collect(Collectors.toList());
     }
 }

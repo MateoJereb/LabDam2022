@@ -30,6 +30,7 @@ import com.mdgz.dam.labdam2022.model.Alojamiento;
 import com.mdgz.dam.labdam2022.model.Departamento;
 import com.mdgz.dam.labdam2022.model.Favorito;
 import com.mdgz.dam.labdam2022.persistencia.OnResult;
+import com.mdgz.dam.labdam2022.persistencia.retrofit.AppRetrofit;
 import com.mdgz.dam.labdam2022.persistencia.room.AppDataBase;
 import com.mdgz.dam.labdam2022.repo.AlojamientoRepository;
 import com.mdgz.dam.labdam2022.viewmodels.BusquedaViewModel;
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         AppDataBase.getInstance(getApplicationContext());
+        AppRetrofit.getInstance();
 
         busquedaViewModel = new ViewModelProvider(this, new BusquedaViewModelFactory(this)).get(BusquedaViewModel.class);
         reservaViewModel = new ViewModelProvider(this, new ReservaViewModelFactory(this)).get(ReservaViewModel.class);

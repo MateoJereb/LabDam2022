@@ -55,10 +55,10 @@ public class FavoritoRoomDataSource implements FavoritoDataSource {
     }
 
     @Override
-    public void eliminarFavorito(UUID favoritoId, OnResult<Void> callback) {
+    public void eliminarFavorito(UUID alojamientoID, OnResult<Void> callback) {
         try{
-            favoritoDAO.eliminarFavorito(favoritoId);
-            Log.d("Eliminar",favoritoId.toString());
+            favoritoDAO.eliminarFavorito(alojamientoID);
+            Log.d("Eliminar",alojamientoID.toString());
             callback.onSuccess(null);
         }
         catch (Exception e){

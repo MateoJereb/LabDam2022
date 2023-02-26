@@ -54,7 +54,7 @@ public class AlojamientoRepository {
         dataSource.recuperarDepartamentos(callback);
     }
 
-    public void recuperarAlojamientos(OnResult<Pair<List<Alojamiento>,List<Favorito>>> callback){
+    public void recuperarAlojamientos(OnResult<List<Alojamiento>> callback){
         dataSource.recuperarAlojamientos(callback);
     }
 }

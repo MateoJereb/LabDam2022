@@ -105,7 +105,7 @@ public class AlojamientoRoomDataSource implements AlojamientoDataSource {
     }
 
     @Override
-    public void recuperarAlojamientos(OnResult<Pair<List<Alojamiento>,List<Favorito>>> callback) {
+    public void recuperarAlojamientos(OnResult<List<Alojamiento>> callback) {
         try{
             List<DepartamentoEntity> dptoEntity = alojamientoDAO.recuperarDepartamentos();
             List<HabitacionEntity> habEntity = alojamientoDAO.recuperarHabitaciones();
@@ -121,13 +121,8 @@ public class AlojamientoRoomDataSource implements AlojamientoDataSource {
                 rtdo.add(HabitacionMapper.fromEntity(h,aloj));
             }
 
-            List<FavoritoEntity> favEntity = favoritoDAO.recuperarFavoritos();
-            List<Favorito> rtdo2 = favEntity.stream().map(f -> FavoritoMapper.fromEntity(f)).collect(Collectors.toList());
-
             Collections.shuffle(rtdo);
-
-            Pair<List<Alojamiento>,List<Favorito>> salida = new Pair<>(rtdo,rtdo2);
-            callback.onSuccess(salida);
+            callback.onSuccess(rtdo);
         }
         catch (final Exception e){
             callback.onError(e);

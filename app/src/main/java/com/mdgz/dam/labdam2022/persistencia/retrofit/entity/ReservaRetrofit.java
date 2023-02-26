@@ -6,48 +6,23 @@ import java.util.Date;
 import java.util.UUID;
 
 public class ReservaRetrofit {
+    @SerializedName("alojamientoId")
+    private UUID alojamientoID;
 
-    @SerializedName("id")
-    private UUID id;
+    @SerializedName("usuarioId")
+    private UUID usuarioID;
 
     @SerializedName("fechaIngreso")
     private Date fechaIngreso;
 
-    @SerializedName("fechaEgreso")
-    private Date fechaEgreso;
+    @SerializedName("fechaSalida")
+    private Date fechaSalida;
 
-    @SerializedName("cancelada")
-    private Boolean cancelada;
-
-    @SerializedName("cantidad")
-    private Integer cantidad;
-
-    @SerializedName("monto")
-    private Double monto;
-
-    @SerializedName("alojamientoID")
-    private UUID alojamientoID;
-
-    @SerializedName("usuarioID")
-    private UUID usuarioID;
-
-    public ReservaRetrofit(UUID id, Date fechaIngreso, Date fechaEgreso, Boolean cancelada, Integer cantidad, Double monto, UUID alojamientoID, UUID usuarioID) {
-        this.id = id;
+    public ReservaRetrofit(Date fechaIngreso, Date fechaSalida, UUID alojamientoID, UUID usuarioID) {
         this.fechaIngreso = fechaIngreso;
-        this.fechaEgreso = fechaEgreso;
-        this.cancelada = cancelada;
-        this.cantidad = cantidad;
-        this.monto = monto;
+        this.fechaSalida = fechaSalida;
         this.alojamientoID = alojamientoID;
         this.usuarioID = usuarioID;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     public Date getFechaIngreso() {
@@ -58,36 +33,12 @@ public class ReservaRetrofit {
         this.fechaIngreso = fechaIngreso;
     }
 
-    public Date getFechaEgreso() {
-        return fechaEgreso;
+    public Date getFechaSalida() {
+        return fechaSalida;
     }
 
-    public void setFechaEgreso(Date fechaEgreso) {
-        this.fechaEgreso = fechaEgreso;
-    }
-
-    public Boolean getCancelada() {
-        return cancelada;
-    }
-
-    public void setCancelada(Boolean cancelada) {
-        this.cancelada = cancelada;
-    }
-
-    public Integer getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(Integer cantidad) {
-        this.cantidad = cantidad;
-    }
-
-    public Double getMonto() {
-        return monto;
-    }
-
-    public void setMonto(Double monto) {
-        this.monto = monto;
+    public void setFechaSalida(Date fechaSalida) {
+        this.fechaSalida = fechaSalida;
     }
 
     public UUID getAlojamientoID() {

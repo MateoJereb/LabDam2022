@@ -19,7 +19,7 @@ public interface AlojamientoDataSource {
 
     void recuperarDepartamentos(OnResult<List<Departamento>> callback);
 
-    void recuperarAlojamientos(OnResult<Pair<List<Alojamiento>,List<Favorito>>> callback);
+    void recuperarAlojamientos(OnResult<List<Alojamiento>> callback);
 
     void buscarPorId(Integer id, OnResult<List<Alojamiento>> callback);
 }

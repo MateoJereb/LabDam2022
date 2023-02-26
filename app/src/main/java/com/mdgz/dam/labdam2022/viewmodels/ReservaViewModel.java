@@ -39,7 +39,6 @@ public class ReservaViewModel extends ViewModel {
     }
 
     public void reservar(Reserva res){
-        reservaRealizada.postValue(false);
         reservaRepository.guardarReserva(res,guardadaCallback);
     }
 
@@ -47,7 +46,6 @@ public class ReservaViewModel extends ViewModel {
         @Override
         public void onSuccess(List<Reserva> result) {
             reservas = result;
-            reservaRealizada.postValue(true);
         }
 
         @Override
@@ -60,6 +58,7 @@ public class ReservaViewModel extends ViewModel {
     private OnResult<Void> guardadaCallback = new OnResult<Void>() {
         @Override
         public void onSuccess(Void result) {
+            reservaRealizada.postValue(true);
             Log.d("","Reserva Guardada");
         }
 
@@ -69,5 +68,9 @@ public class ReservaViewModel extends ViewModel {
             Log.e("ERROR","No se guardo la reserva");
         }
     };
+
+    public void reservaTerminada(){
+        reservaRealizada.postValue(false);
+    }
 }
 

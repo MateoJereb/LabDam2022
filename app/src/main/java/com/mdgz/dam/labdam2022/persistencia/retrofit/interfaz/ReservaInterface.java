@@ -14,7 +14,7 @@ import retrofit2.http.POST;
 public interface ReservaInterface {
     @Headers("Authorization: Basic amVyZWI6cGFzcw==")
     @POST("reserva")
-    Call<Response> guardarReserva(@Body ReservaRetrofit res);
+    Call<ReservaRetrofit> guardarReserva(@Body ReservaRetrofit res);
 
     @Headers("Authorization: Basic amVyZWI6cGFzcw==")
     @GET("reserva")

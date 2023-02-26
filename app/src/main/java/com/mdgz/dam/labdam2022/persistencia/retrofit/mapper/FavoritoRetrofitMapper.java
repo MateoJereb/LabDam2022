@@ -13,7 +13,6 @@ public class FavoritoRetrofitMapper {
 
     public static FavoritoRetrofit toEntity(Favorito fav){
         return new FavoritoRetrofit(
-                fav.getId(),
                 fav.getAlojamientoID(),
                 fav.getUsuarioID()
         );
@@ -21,7 +20,7 @@ public class FavoritoRetrofitMapper {
 
     public static Favorito fromEntity(FavoritoRetrofit fav){
         return new Favorito(
-                fav.getId(),
+                null,
                 fav.getAlojamientoID(),
                 fav.getUsuarioID()
         );

@@ -12,6 +12,7 @@ import com.mdgz.dam.labdam2022.persistencia.retrofit.entity.ReservaRetrofit;
 import com.mdgz.dam.labdam2022.persistencia.retrofit.interfaz.FavoritoInterface;
 import com.mdgz.dam.labdam2022.persistencia.retrofit.interfaz.ReservaInterface;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,6 +21,10 @@ import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -39,15 +44,20 @@ public class AppRetrofit {
     }
 
     private AppRetrofit(){
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.level(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(Date.class,dateDeserializer)
-                .setDateFormat("yyyy-MM-dd")
+                .setDateFormat("yyyy-MM-dd'T'hh:mm")
                 .setLenient()
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://dam-recordatorio-favoritos-api.duckdns.org/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(client)
                 .build();
 
         favoritoInterface = retrofit.create(FavoritoInterface.class);
@@ -67,7 +77,7 @@ public class AppRetrofit {
         public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             Date fecha = null;
             try {
-                fecha = new SimpleDateFormat("yyyy-MM-dd").parse(json.getAsString());
+                fecha = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm").parse(json.getAsString());
             } catch (ParseException e) {
                 e.printStackTrace();
             }
